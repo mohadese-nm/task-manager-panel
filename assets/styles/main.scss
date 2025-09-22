@@ -1,0 +1,112 @@
+$app-color: #bfa1cf;
+
+html, body, #__nuxt, #__layout {
+  height: 100%;
+}
+
+body, .v-application {
+  font-family: 'Vazirmatn', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+}
+
+.app-bg {
+  background: linear-gradient(135deg, rgba($app-color, 0.15), rgba(255,255,255,0.6));
+}
+
+.app-main {
+  background: radial-gradient(1200px 600px at 100% -100%, rgba($app-color, 0.12), transparent),
+              radial-gradient(1000px 500px at -20% 120%, rgba(127, 106, 143, 0.10), transparent);
+}
+
+.app-drawer {
+  backdrop-filter: blur(6px);
+}
+
+.is-today {
+  background: rgba($app-color, 0.45) !important;
+  outline: 2px dashed rgba($app-color, 0.4);
+  outline-offset: -4px;
+}
+
+.task-card-done {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.task-card {
+  border-radius: 14px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.status-todo {
+  border: 1px solid #ffd778 !important;
+}
+.status-inprogress {
+  border: 1px solid #7ad5ff !important;
+}
+.status-done {
+  border: 1px solid #43a047 !important;
+}
+
+.day-card {
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
+  backdrop-filter: blur(4px);
+}
+.day-card .v-card-title {
+  font-weight: 600;
+  color: #3d2f47;
+}
+.day-card .v-card-text {
+  scrollbar-width: thin;
+}
+.day-card .v-card-text::-webkit-scrollbar {
+  width: 8px;
+}
+.day-card .v-card-text::-webkit-scrollbar-thumb {
+  background: rgba($app-color, 0.6);
+  border-radius: 8px;
+}
+.day-card .v-card-text::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.04);
+}
+
+.week-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  white-space: nowrap;
+  direction: rtl;
+}
+
+.is-weekend {
+  background: rgba(255, 193, 7, 0.12) !important; /* زرد ملایم برای آخر هفته */
+}
+
+.filter-bar {
+  width: 100%;
+  margin: 0 0 16px 0;
+  padding: 16px 30px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  backdrop-filter: blur(6px);
+}
+
+.outlined-primary .v-field {
+  --v-field-border-color: #bfa1cf;
+  --v-field-hover-border-color: #bfa1cf;
+  --v-field-focused-border-color: #bfa1cf;
+  border-radius: 12px !important;
+}
+
+/* حذف underline داخلی در برخی تم‌ها برای فیلدها */
+.outlined-primary .v-field__overlay { display: none; }
+
+/* Utilities */
+.text-none { text-transform: none !important; }
+.v-btn.text-none:hover { filter: brightness(1.03); }
+
+
