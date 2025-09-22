@@ -9,15 +9,17 @@
           <VSelect class="outlined-primary" variant="outlined" :items="statusItems" v-model="status" label="فیلتر وضعیت" clearable hide-details />
         </VCol>
         <VCol cols="12" md="3" class="text-center text-md-right">
-          <VBtn color="primary" variant="elevated" rounded="lg" size="large" class="text-white" append-icon="mdi-plus" @click="openCreate">
-            افزودن تسک
-          </VBtn>
+          <div class="d-flex gap-2 justify-end">
+            <VBtn color="primary" variant="elevated" rounded="lg" size="large" class="text-white" append-icon="mdi-plus" @click="openCreate">
+              افزودن تسک
+            </VBtn>
+          </div>
         </VCol>
       </VRow>
     </div>
 
     <VRow class="week-scroll flex-nowrap">
-      <VCol v-for="date in week.currentWeek" :key="date" cols="12" sm="6" md="4" lg="3" xl="2">
+      <VCol v-for="date in week.currentWeek" :key="date.toDateString()" cols="12" sm="6" md="4" lg="3" xl="2">
         <VCard :class="['day-card', { 'is-today': week.isToday(date), 'is-weekend': isWeekend(date) }]" :title="formatDate(date)" dir="rtl">
           <VCardText v-if="!isWeekend(date)" style="max-height: 70vh; overflow: auto;" @scroll.passive="onScroll(date, $event)">
             <div
@@ -37,7 +39,7 @@
                 @toggle="onToggle"
               />
             </div>
-            <div v-if="loadingMore[date] && canLoadMore(date)" class="text-center py-2">در حال بارگذاری...</div>
+            <div v-if="loadingMore[date.toDateString()] && canLoadMore(date)" class="text-center py-2">در حال بارگذاری...</div>
           </VCardText>
           <VCardText v-else class="text-center py-12">
             روز تعطیل
@@ -108,7 +110,7 @@ const draggingId = ref<string | null>(null)
 onMounted(() => {
   init()
   for (const d of week.currentWeek) {
-    visibleCount[d] = perPage
+    visibleCount[d.toDateString()] = perPage
   }
   // sync تغییرات بین تب‌ها
   if (process.client) {
@@ -120,46 +122,47 @@ onMounted(() => {
   }
 })
 
-function visibleTasks(dateIso: string) {
-  const day = days.value.find(d => d.date === dateIso)
+function visibleTasks(date: Date) {
+  const day = days.value.find(d => d.date.toDateString() === date.toDateString())
   const list = applyFilter(day ? day.tasks : [], search.value, status.value)
-  return list.slice(0, visibleCount[dateIso] || perPage)
+  return list.slice(0, visibleCount[date.toDateString()] || perPage)
 }
 
-function canLoadMore(dateIso: string) {
-  const day = days.value.find(d => d.date === dateIso)
+function canLoadMore(date: Date) {
+  const day = days.value.find(d => d.date.toDateString() === date.toDateString())
   const total = applyFilter(day ? day.tasks : [], search.value, status.value).length
-  const current = visibleCount[dateIso] || perPage
+  const current = visibleCount[date.toDateString()] || perPage
   return current < total
 }
 
-function onScroll(dateIso: string, evt: Event) {
+function onScroll(date: Date, evt: Event) {
   const el = evt.target as HTMLElement
+  const dateStr = date.toDateString()
   if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
-    if (loadingMore[dateIso]) return
-    if (!canLoadMore(dateIso)) return
-    loadingMore[dateIso] = true
+    if (loadingMore[dateStr]) return
+    if (!canLoadMore(date)) return
+    loadingMore[dateStr] = true
     setTimeout(() => {
-      visibleCount[dateIso] = (visibleCount[dateIso] || perPage) + perPage
-      loadingMore[dateIso] = false
+      visibleCount[dateStr] = (visibleCount[dateStr] || perPage) + perPage
+      loadingMore[dateStr] = false
     }, 400)
   }
 }
 
 function dragStart(id: string) { draggingId.value = id }
-function onDrop(dateIso: string) {
+function onDrop(date: Date) {
   if (!draggingId.value) return
-  moveTask(draggingId.value, dateIso)
+  moveTask(draggingId.value, date)
   draggingId.value = null
 }
 
 const dialog = ref(false)
 const editingTask = ref<Task | null>(null)
-const dialogDate = ref<string>('')
+const dialogDate = ref<Date>(new Date())
 
 function openCreate() {
   editingTask.value = null
-  dialogDate.value = week.todayIso
+  dialogDate.value = week.todayDate
   dialog.value = true
 }
 function onEdit(task: Task) {
@@ -182,38 +185,38 @@ function confirmDeleteYes() {
   taskToDelete.value = null
 }
 const { $sound } = useNuxtApp()
+
 function onToggle(task: Task) {
   const next = task.status === TaskStatus.Done ? TaskStatus.Todo : TaskStatus.Done
   updateTask(task.id, (t) => ({ ...t, status: next }))
   if (next === TaskStatus.Done) $sound.playDone()
 }
-function onSave(payload: { dateIso: string, task: Omit<Task, 'id' | 'dueDate'>, editingId?: string }) {
+function onSave(payload: { date: Date, task: Omit<Task, 'id' | 'dueDate'>, editingId?: string }) {
   if (payload.editingId) {
     const id = payload.editingId
     const original = editingTask.value
-    if (original && payload.dateIso !== original.dueDate) {
+    if (original && payload.date.toDateString() !== original.dueDate.toDateString()) {
       // اگر تاریخ تغییر کرد، تسک را به روز جدید منتقل کن
-      moveTask(id, payload.dateIso)
+      moveTask(id, payload.date)
     }
     updateTask(id, (t) => ({ ...t, ...payload.task }))
     notify('تسک ویرایش شد', 'info')
   } else {
-    addTask(payload.dateIso, payload.task)
+    addTask(payload.date, payload.task)
     $sound.playCreate()
     notify('تسک ایجاد شد', 'success')
   }
   dialog.value = false
 }
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('fa-IR', { weekday: 'long', month: 'short', day: 'numeric' })
+function formatDate(date: Date) {
+  return date.toLocaleDateString('fa-IR', { weekday: 'long', month: 'short', day: 'numeric' })
 }
 
 useSeoMeta({ title: 'برای انجام' })
 
-function isWeekend(iso: string) {
-  const d = new Date(iso + 'T00:00:00')
-  const day = d.getDay() // 0=Sun ... 6=Sat
+function isWeekend(date: Date) {
+  const day = date.getDay() // 0=Sun ... 6=Sat
   // پنجشنبه: 4، جمعه: 5 در تقویم fa-IR؟ به دلیل تفاوت، با تاریخ میلادی استاندارد: Thu=4, Fri=5
   // در ایران آخر هفته پنجشنبه و جمعه است؛ در گِت‌دیِ بین‌المللی Thu=4 و Fri=5
   return day === 4 || day === 5

@@ -1,29 +1,39 @@
 // پلاگین صدا فقط در کلاینت (برای SSR-safe)
-// از AudioContext و AudioBuffer برای جلوگیری از دانلود فایل توسط Download Manager استفاده می‌کنیم
-// صدا به‌صورت data URI کوتاه (wav) درج می‌شود
+// استفاده از Web Audio API برای سازگاری بهتر
 
 type SoundApi = {
   playCreate: () => void
   playDone: () => void
 }
 
-const createAudio = (srcDataUri: string) => {
-  const audio = new Audio(srcDataUri)
-  audio.preload = 'auto'
+// ایجاد صدا با Web Audio API
+function createBeep(frequency: number, duration: number = 200) {
   return () => {
-    // اجرای سریع و ساده، بدون پیچیدگی
-    audio.currentTime = 0
-    audio.play().catch(() => {})
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const oscillator = audioContext.createOscillator()
+      const gainNode = audioContext.createGain()
+      
+      oscillator.connect(gainNode)
+      gainNode.connect(audioContext.destination)
+      
+      oscillator.frequency.value = frequency
+      oscillator.type = 'sine'
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000)
+      
+      oscillator.start(audioContext.currentTime)
+      oscillator.stop(audioContext.currentTime + duration / 1000)
+    } catch (error) {
+      console.warn('خطا در پخش صدا:', error)
+    }
   }
 }
 
-// دو بوق ساده کوتاه به صورت data URI (با حجم بسیار کم)
-const BEEP_CREATE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAAABWAAAAPwAA'
-const BEEP_DONE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAAABWAAAAPwAA'
-
 export default defineNuxtPlugin(() => {
-  const playCreate = createAudio(BEEP_CREATE)
-  const playDone = createAudio(BEEP_DONE)
+  const playCreate = createBeep(800, 150) // صدای ایجاد تسک
+  const playDone = createBeep(600, 200)   // صدای تکمیل تسک
 
   const sound: SoundApi = { playCreate, playDone }
   return {
@@ -38,5 +48,3 @@ declare module '#app' {
 }
 
 export {}
-
-

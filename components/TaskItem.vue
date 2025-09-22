@@ -62,7 +62,7 @@
           کمتر
         </VBtn>
       </div>
-      <div class="text-caption text-disabled mt-1" dir="rtl">{{ formatJalali(task.dueDate) }}</div>
+      <div class="text-caption text-disabled mt-1" dir="rtl">{{ formatJalaliDate(task.dueDate) }}</div>
     </div>
   </VCard>
 </template>
@@ -79,16 +79,15 @@ const emit = defineEmits<{
 
 function toggle() { emit('toggle', props.task) }
 
-function formatJalali(iso: string) {
+function formatJalaliDate(date: Date) {
   try {
-    const d = new Date(iso + 'T00:00:00')
-    const parts = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }).formatToParts(d)
+    const parts = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }).formatToParts(date)
     const day = parts.find(p => p.type === 'day')?.value || ''
     const monthName = parts.find(p => p.type === 'month')?.value || ''
     const year = parts.find(p => p.type === 'year')?.value || ''
     return `${day} ${monthName} ${year}`
   } catch {
-    return iso
+    return date.toLocaleDateString('fa-IR')
   }
 }
 

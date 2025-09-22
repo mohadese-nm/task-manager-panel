@@ -2,7 +2,7 @@
 
 export const useWeek = () => {
   const today = new Date()
-  const isToday = (iso: string) => iso === today.toISOString().slice(0, 10)
+  const isToday = (date: Date) => date.toDateString() === today.toDateString()
   // شروع هفته: شنبه (Saturday)
   const day = today.getDay() // 0=Sun ... 6=Sat
   const diffToSaturday = (day + 1) % 7 // چند روز تا شنبه قبل
@@ -11,9 +11,9 @@ export const useWeek = () => {
   const currentWeek = Array.from({ length: 7 }).map((_, i) => {
     const d = new Date(start)
     d.setDate(start.getDate() + i)
-    return d.toISOString().slice(0, 10)
+    return new Date(d)
   })
-  return { todayIso: today.toISOString().slice(0, 10), isToday, currentWeek }
+  return { todayDate: new Date(today), isToday, currentWeek }
 }
 
 

@@ -14,6 +14,7 @@ type HydrationStrategies = {
 type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }>)
 
 
+export const PersianDatePicker: typeof import("../components/PersianDatePicker.vue")['default']
 export const TaskDialog: typeof import("../components/TaskDialog.vue")['default']
 export const TaskItem: typeof import("../components/TaskItem.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
@@ -40,6 +41,7 @@ export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
+export const LazyPersianDatePicker: LazyComponent<typeof import("../components/PersianDatePicker.vue")['default']>
 export const LazyTaskDialog: LazyComponent<typeof import("../components/TaskDialog.vue")['default']>
 export const LazyTaskItem: LazyComponent<typeof import("../components/TaskItem.vue")['default']>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>

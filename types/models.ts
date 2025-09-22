@@ -11,11 +11,11 @@ export interface Task {
   title: string
   description?: string
   status: TaskStatus
-  dueDate: string // ISO date (YYYY-MM-DD)
+  dueDate: Date // تاریخ سررسید
 }
 
 export interface DayColumn {
-  date: string // ISO date (YYYY-MM-DD)
+  date: Date // تاریخ روز
   tasks: Task[]
 }
 
