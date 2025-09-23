@@ -5,6 +5,7 @@
         <VAppBarNavIcon @click="drawer = !drawer" />
         <VToolbarTitle>پنل کارها</VToolbarTitle>
         <VSpacer />
+        <client-only>
         <VBtn
           v-if="!auth.currentUser"
           color="secondary"
@@ -29,20 +30,24 @@
           prepend-icon="mdi-logout"
           @click="logout"
           class="mx-1 text-none"
-        >
-          خروج
-        </VBtn>
+          >
+            خروج
+          </VBtn>
+        </client-only>
       </VAppBar>
 
-      <VNavigationDrawer v-model="drawer" temporary class="app-drawer" location="right">
+      <VNavigationDrawer v-model="drawer" temporary class="app-drawer" location="right" mobile>
         <VList nav>
           <VListItem to="/" title="خانه" prepend-icon="mdi-home" />
+          <client-only>
           <VListItem v-if="can('menu_in_todos_show')" to="/admin" title="برای انجام" prepend-icon="mdi-checkbox-multiple-marked-outline" />
+          </client-only>
         </VList>
 
         <template #append>
           <VDivider />
           <div class="pa-3">
+            <client-only>
             <VBtn
               v-if="auth.currentUser"
               block
@@ -55,6 +60,7 @@
             >
               خروج
             </VBtn>
+            </client-only>
           </div>
         </template>
       </VNavigationDrawer>
