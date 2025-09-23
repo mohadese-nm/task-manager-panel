@@ -11,14 +11,18 @@
 - ✅ تغییر وضعیت تسک‌ها (انجام شده، انجام نشده، در حال انجام)
 - ✅ نمایش 7 روز هفته با هایلایت امروز
 - ✅ Infinite Scroll برای هر روز
-- ✅ جستجو و فیلتر پیشرفته
+- ✅ جستجو و فیلتر 
 - ✅ Real-time Sync بین تب‌ها
 - ✅ نوتیفیکیشن صوتی
 - ✅ کنترل دسترسی مبتنی بر پرمیشن (Type-safe)
-- ✅ Date Picker جلالی 
+- ✅ تقویم جلالی 
 
 
 ## نصب و راه‌اندازی
+
+### پیش‌نیازها
+
+- نسخه Node.js: **Node 20 LTS**
 
 ```bash
 # نصب dependencies
@@ -77,13 +81,17 @@ npm run preview
 ## ساختار پروژه
 
 ```
-├── components/          # کامپوننت‌های Vue
-├── composables/         # Composables برای منطق مشترک
+├── components/         # کامپوننت‌های Vue
+├── composables/        # Composables برای منطق مشترک
+├── assets/             # استایل‌ها و دارایی‌های پردازشی (SCSS, تصاویر ماژولی)
 ├── middleware/         # Route middleware
+├── layouts/            # layouts
 ├── pages/              # صفحات Nuxt
 ├── plugins/            # Nuxt plugins
+├── public/             # فایل‌های استاتیک سِرو‌شونده در روت (مثل favicon)
 ├── stores/             # Pinia stores
 ├── types/              # TypeScript type definitions
+├── utils/              # jalali date
 └── app.vue             # Root component
 ```
 
