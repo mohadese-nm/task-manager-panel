@@ -2,13 +2,21 @@
 import { useAuthStore } from '@/stores/auth'
 
 export default defineNuxtRouteMiddleware((to) => {
-  const auth = useAuthStore()
+  // چک کردن اینکه آیا Pinia فعال است یا نه
   if (import.meta.client) {
-    if (!auth.currentUser) {
-      auth.loadFromStorage()
-    }
-    if (to.path === '/' && !auth.currentUser) {
-      return navigateTo('/login')
+    try {
+      const auth = useAuthStore()
+      if (!auth.currentUser) {
+        auth.loadFromStorage()
+      }
+      if (to.path === '/' && !auth.currentUser) {
+        return navigateTo('/login')
+      }
+    } catch (error) {
+      // اگر Pinia هنوز فعال نشده، فقط در صورت نیاز به صفحه login هدایت کن
+      if (to.path === '/') {
+        return navigateTo('/login')
+      }
     }
   }
 })

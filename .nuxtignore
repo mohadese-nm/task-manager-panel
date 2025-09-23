@@ -1,0 +1,5 @@
+# حذف فایل‌های غیرضروری از bundle
+.gitignore
+.nuxtignore
+*.md
+.env.example

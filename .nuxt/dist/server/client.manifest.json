@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "D:/projects/tdp/node_modules/nuxt/dist/app/entry.js": {
+  "C:/Projects/tdp/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "D:/projects/tdp/node_modules/nuxt/dist/app/entry.js"
+    "file": "C:/Projects/tdp/node_modules/nuxt/dist/app/entry.js"
   }
 }

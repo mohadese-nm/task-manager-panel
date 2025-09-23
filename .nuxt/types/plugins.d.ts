@@ -22,7 +22,6 @@ type NuxtAppInjections =
   InjectionType<typeof import("../../node_modules/nuxt/dist/app/plugins/dev-server-logs.js")> &
   InjectionType<typeof import("../../node_modules/nuxt/dist/app/plugins/warn.dev.server.js")> &
   InjectionType<typeof import("../../node_modules/nuxt/dist/app/plugins/check-if-layout-used.js")> &
-  InjectionType<typeof import("../../plugins/persian-datepicker.client")> &
   InjectionType<typeof import("../../plugins/sound.client")> &
   InjectionType<typeof import("../../plugins/vuetify")>
 

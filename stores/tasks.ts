@@ -8,16 +8,12 @@ interface TasksState {
   statusFilter: TaskStatus | 'all'
 }
 
-const weekStartSaturday = (base: Date): Date => {
-  const day = base.getDay() // 0=Sun ... 6=Sat
-  const diffToSaturday = (day + 1) % 7
-  const start = new Date(base)
-  start.setDate(base.getDate() - diffToSaturday)
-  return start
-}
-
 const createMockWeek = (): DayColumn[] => {
-  const start = weekStartSaturday(new Date())
+  const today = new Date()
+  const day = today.getDay() // 0=Sun ... 6=Sat
+  const diffToSaturday = (day + 1) % 7
+  const start = new Date(today)
+  start.setDate(today.getDate() - diffToSaturday)
   const days: DayColumn[] = []
   for (let i = 0; i < 7; i++) {
     const d = new Date(start)
@@ -62,7 +58,7 @@ export const useTasksStore = defineStore('tasks', {
   },
   actions: {
     init() {
-      if (process.client) {
+      if (import.meta.client) {
         const raw = localStorage.getItem(STORAGE_KEY)
         if (raw) {
           try {
@@ -76,7 +72,7 @@ export const useTasksStore = defineStore('tasks', {
                 dueDate: new Date(task.dueDate)
               }))
             })))
-            // در صورت تغییر، ذخیره مجدد برای پاک‌سازی دائمی
+            // در صورت تغییر، ذخیره مجدد   
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.days))
           } catch {
             this.days = createMockWeek()
@@ -90,7 +86,7 @@ export const useTasksStore = defineStore('tasks', {
       }
     },
     persist() {
-      if (!process.client) return
+      if (!import.meta.client) return
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.days))
       window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }))
     },

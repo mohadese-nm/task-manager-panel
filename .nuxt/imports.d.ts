@@ -33,7 +33,7 @@ export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
 export { useFilter } from '../composables/useFilter';
 export { usePermission } from '../composables/usePermission';
 export { useWeek } from '../composables/useWeek';
-export { dateToJalali, isoToJalali, todayJalali, normalizeJalaliDigits, jalaliStrToDate, jalaliStrToIso } from '../utils/jalali';
+export { dateToJalali, dateToJalaliString, isoToJalali, todayJalali, normalizeJalaliDigits, jalaliStrToDate, jalaliStrToIso, jalaliToDate } from '../utils/jalali';
 export { useAuthStore } from '../stores/auth';
 export { useTasksStore } from '../stores/tasks';
 export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_modules/@pinia/nuxt/dist/runtime/composables';

@@ -25,7 +25,6 @@
 
 <script setup lang="ts">
 import { TaskStatus, type Task } from '@/types/models'
-import { dateToJalali } from '@/utils/jalali'
 
 const props = defineProps<{
   modelValue: boolean
@@ -57,6 +56,11 @@ function fillFromProps() {
     status.value = TaskStatus.Todo
     selectedDate.value = props.date || new Date()
   }
+  
+  // اطمینان از معتبر بودن تاریخ
+  if (isNaN(selectedDate.value.getTime())) {
+    selectedDate.value = getTodayConsistent()
+  }
 }
 
 watch(() => props.editing, () => { fillFromProps() }, { immediate: true })
@@ -67,7 +71,17 @@ watch(model, (open) => {
     description.value = ''
     status.value = TaskStatus.Todo
     selectedDate.value = props.date || new Date()
+    
+    // اطمینان از معتبر بودن تاریخ
+    if (isNaN(selectedDate.value.getTime())) {
+      selectedDate.value = getTodayConsistent()
+    }
   }
+})
+
+// مقداردهی اولیه
+onMounted(() => {
+  fillFromProps()
 })
 
 const statusItems = [

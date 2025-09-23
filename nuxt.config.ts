@@ -10,6 +10,14 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify']
   },
+  // Tree shaking optimizations
+  experimental: {
+    payloadExtraction: false // کاهش حجم bundle
+  },
+  nitro: {
+    compressPublicAssets: true,
+    compatibilityDate: '2025-09-23'
+  },
   modules: [
     '@pinia/nuxt'
   ],
@@ -23,7 +31,7 @@ export default defineNuxtConfig({
       appName: 'Panell To'
     }
   },
-  vite: {
+    vite: {
     ssr: {
       noExternal: ['vuetify']
     },
@@ -33,11 +41,21 @@ export default defineNuxtConfig({
       }
     },
     plugins: [
-      // @ts-expect-error - نوع‌بندی پلاگین توسط Vite فراهم است
       vuetify({
         autoImport: true
       })
-    ]
+    ],
+    // Tree shaking optimizations
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['vue', 'pinia'],
+            vuetify: ['vuetify']
+          }
+        }
+      }
+    }
   },
   app: {
     head: {

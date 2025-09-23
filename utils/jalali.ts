@@ -1,22 +1,32 @@
-import * as jalaali from 'jalaali-js'
+import { toGregorian, toJalaali } from 'jalaali-js'
 
-export function dateToJalali(date: Date): string {
-  if (isNaN(date.getTime())) return todayJalali()
-  const parts = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(date)
-  const year = parts.find(p => p.type === 'year')?.value || ''
-  const month = parts.find(p => p.type === 'month')?.value || ''
-  const day = parts.find(p => p.type === 'day')?.value || ''
-  return `${year}/${month}/${day}`
+export function dateToJalali(date: Date): { jy: number, jm: number, jd: number } {
+  if (isNaN(date.getTime())) {
+    const today = new Date()
+    return dateToJalali(today)
+  }
+  
+  const gy = date.getFullYear()
+  const gm = date.getMonth() + 1 // ماه در Date از 0 شروع می‌شود
+  const gd = date.getDate()
+  
+  const { jy, jm, jd } = toJalaali(gy, gm, gd)
+  return { jy, jm, jd }
+}
+
+export function dateToJalaliString(date: Date): string {
+  const jalali = dateToJalali(date)
+  return `${jalali.jy}/${jalali.jm.toString().padStart(2, '0')}/${jalali.jd.toString().padStart(2, '0')}`
 }
 
 export function isoToJalali(iso: string): string {
   const d = new Date(iso + 'T00:00:00Z')
-  return dateToJalali(d)
+  return dateToJalaliString(d)
 }
 
 export function todayJalali(): string {
   const now = new Date()
-  return dateToJalali(now)
+  return dateToJalaliString(now)
 }
 
 export function normalizeJalaliDigits(input: string): string {
@@ -47,7 +57,7 @@ export function jalaliStrToDate(jalaliStr: string): Date | null {
   const jm = parseInt(m[2], 10)
   const jd = parseInt(m[3], 10)
   try {
-    const { gy, gm, gd } = jalaali.toGregorian(jy, jm, jd)
+    const { gy, gm, gd } = toGregorian(jy, jm, jd)
     const date = new Date(gy, gm - 1, gd) // ماه در Date از 0 شروع می‌شود
     return isNaN(date.getTime()) ? null : date
   } catch {
@@ -61,4 +71,9 @@ export function jalaliStrToIso(jalaliStr: string): string | null {
   const mm = String(date.getMonth() + 1).padStart(2, '0')
   const dd = String(date.getDate()).padStart(2, '0')
   return `${date.getFullYear()}-${mm}-${dd}`
+}
+
+export function jalaliToDate(jy: number, jm: number, jd: number): Date {
+  const { gy, gm, gd } = toGregorian(jy, jm, jd)
+  return new Date(gy, gm - 1, gd) // ماه در Date از 0 شروع می‌شود
 }

@@ -1,15 +1,16 @@
 <template>
   <div class="persian-date-picker">
-    <VTextField
-      v-model="displayValue"
-      :label="label"
-      :placeholder="placeholder"
-      readonly
-      prepend-inner-icon="mdi-calendar"
-      @click="showPicker = true"
-    />
-    
-    <VDialog v-model="showPicker" max-width="400">
+    <ClientOnly>
+      <VTextField
+        v-model="displayValue"
+        :label="label"
+        :placeholder="placeholder"
+        readonly
+        prepend-inner-icon="mdi-calendar"
+        @click="showPicker = true"
+      />
+      
+      <VDialog v-model="showPicker" max-width="400">
       <VCard>
         <VCardTitle class="d-flex align-center justify-space-between">
           <span>انتخاب تاریخ</span>
@@ -55,40 +56,40 @@
                 @update:model-value="updateDate"
               />
             </div>
-            
-            <!-- نمایش تاریخ انتخاب شده -->
-            <VAlert type="info" variant="tonal" class="mb-3">
-              <template #prepend>
-                <VIcon icon="mdi-calendar-check" />
-              </template>
-              <div class="text-body-2">
-                تاریخ انتخاب شده: {{ displayValue }}
-              </div>
-            </VAlert>
           </div>
         </VCardText>
         
         <VCardActions>
           <VSpacer />
           <VBtn variant="text" @click="showPicker = false">انصراف</VBtn>
-          <VBtn color="primary" @click="confirmDate">تایید</VBtn>
+          <VBtn color="primary" @click="confirmDate">تأیید</VBtn>
         </VCardActions>
       </VCard>
     </VDialog>
+    
+    <template #fallback>
+      <VTextField
+        :label="label"
+        :placeholder="placeholder"
+        readonly
+        prepend-inner-icon="mdi-calendar"
+      />
+    </template>
+    </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
-import { dateToJalali, jalaliStrToDate } from '@/utils/jalali'
+import { dateToJalali, jalaliToDate } from '@/utils/jalali'
 
 const props = defineProps<{
-  modelValue: Date
+  modelValue?: Date
   label?: string
   placeholder?: string
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: Date): void
+  'update:modelValue': [value: Date | undefined]
 }>()
 
 const showPicker = ref(false)
@@ -96,143 +97,105 @@ const selectedYear = ref(1403)
 const selectedMonth = ref(1)
 const selectedDay = ref(1)
 
-// مقداردهی اولیه فوری
-onMounted(() => {
-  initializeDate()
-})
-
-// مقدار نمایشی
 const displayValue = computed(() => {
-  if (!props.modelValue) return ''
-  return dateToJalali(props.modelValue)
+  if (!props.modelValue) {
+    // نمایش تاریخ امروز به عنوان پیش‌فرض
+    const today = new Date()
+    const jalali = dateToJalali(today)
+    return `${jalali.jy}/${jalali.jm.toString().padStart(2, '0')}/${jalali.jd.toString().padStart(2, '0')}`
+  }
+  const jalali = dateToJalali(props.modelValue)
+  return `${jalali.jy}/${jalali.jm.toString().padStart(2, '0')}/${jalali.jd.toString().padStart(2, '0')}`
 })
 
-// لیست سال‌ها (1400 تا 1410)
 const yearItems = computed(() => {
-  const years = []
-  for (let year = 1400; year <= 1410; year++) {
-    years.push({ title: year.toString(), value: year })
-  }
-  return years
+  const currentYear = new Date().getFullYear()
+  const jalali = dateToJalali(new Date(currentYear, 0, 1))
+  const startYear = jalali.jy - 10
+  const endYear = jalali.jy + 10
+  
+  return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
+    title: (startYear + i).toString(),
+    value: startYear + i
+  }))
 })
 
-// لیست ماه‌ها
-const monthItems = computed(() => {
-  const months = [
-    { title: 'فروردین', value: 1 },
-    { title: 'اردیبهشت', value: 2 },
-    { title: 'خرداد', value: 3 },
-    { title: 'تیر', value: 4 },
-    { title: 'مرداد', value: 5 },
-    { title: 'شهریور', value: 6 },
-    { title: 'مهر', value: 7 },
-    { title: 'آبان', value: 8 },
-    { title: 'آذر', value: 9 },
-    { title: 'دی', value: 10 },
-    { title: 'بهمن', value: 11 },
-    { title: 'اسفند', value: 12 }
-  ]
-  return months
-})
+const monthItems = computed(() => [
+  { title: 'فروردین', value: 1 },
+  { title: 'اردیبهشت', value: 2 },
+  { title: 'خرداد', value: 3 },
+  { title: 'تیر', value: 4 },
+  { title: 'مرداد', value: 5 },
+  { title: 'شهریور', value: 6 },
+  { title: 'مهر', value: 7 },
+  { title: 'آبان', value: 8 },
+  { title: 'آذر', value: 9 },
+  { title: 'دی', value: 10 },
+  { title: 'بهمن', value: 11 },
+  { title: 'اسفند', value: 12 }
+])
 
-// لیست روزها
 const dayItems = computed(() => {
-  const days = []
-  const maxDays = getMaxDaysInMonth(selectedYear.value, selectedMonth.value)
-  for (let day = 1; day <= maxDays; day++) {
-    days.push({ title: day.toString(), value: day })
-  }
-  return days
+  const daysInMonth = getDaysInJalaliMonth(selectedYear.value, selectedMonth.value)
+  return Array.from({ length: daysInMonth }, (_, i) => ({
+    title: (i + 1).toString(),
+    value: i + 1
+  }))
 })
 
-// بروزرسانی روز هنگام تغییر سال یا ماه
-watch([selectedYear, selectedMonth], () => {
-  updateDate()
-})
-
-// محاسبه حداکثر روزهای ماه
-function getMaxDaysInMonth(year: number, month: number): number {
+function getDaysInJalaliMonth(year: number, month: number): number {
   if (month <= 6) return 31
   if (month <= 11) return 30
-  // اسفند
-  return isLeapYear(year) ? 30 : 29
+  // برای اسفند، بررسی سال کبیسه
+  return isLeapJalaliYear(year) ? 30 : 29
 }
 
-// بررسی سال کبیسه
-function isLeapYear(year: number): boolean {
-  const leapYears = [1403, 1407, 1411, 1415, 1419, 1423, 1427, 1431, 1435, 1439, 1443, 1447, 1451, 1455, 1459, 1463, 1467, 1471, 1475, 1479, 1483, 1487, 1491, 1495, 1499]
-  return leapYears.includes(year)
+function isLeapJalaliYear(year: number): boolean {
+  const jalali = dateToJalali(new Date(year + 621, 2, 20)) // 20 مارس
+  return jalali.jy % 4 === 3
 }
 
-// بروزرسانی تاریخ
 function updateDate() {
-  // بررسی اینکه روز انتخاب شده در ماه جدید معتبر باشد
-  const maxDays = getMaxDaysInMonth(selectedYear.value, selectedMonth.value)
-  if (selectedDay.value > maxDays) {
-    selectedDay.value = maxDays
-  }
+  // فقط برای به‌روزرسانی لیست روزها
 }
 
-// تایید تاریخ
 function confirmDate() {
-  const jalaliStr = `${selectedYear.value}/${selectedMonth.value.toString().padStart(2, '0')}/${selectedDay.value.toString().padStart(2, '0')}`
-  const date = jalaliStrToDate(jalaliStr)
-  if (date) {
-    emit('update:modelValue', date)
-  }
+  const date = jalaliToDate(selectedYear.value, selectedMonth.value, selectedDay.value)
+  emit('update:modelValue', date)
   showPicker.value = false
 }
 
 // مقداردهی اولیه
-function initializeDate() {
-  if (props.modelValue && !isNaN(props.modelValue.getTime())) {
-    const jalaliStr = dateToJalali(props.modelValue)
-    const parts = jalaliStr.split('/')
-    if (parts.length === 3) {
-      const year = parseInt(parts[0])
-      const month = parseInt(parts[1])
-      const day = parseInt(parts[2])
-      
-      if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-        selectedYear.value = year
-        selectedMonth.value = month
-        selectedDay.value = day
-        return
-      }
-    }
-  }
-  
-  // مقدار پیش‌فرض: امروز
-  const today = new Date()
-  const todayJalali = dateToJalali(today)
-  const parts = todayJalali.split('/')
-  if (parts.length === 3) {
-    selectedYear.value = parseInt(parts[0]) || 1403
-    selectedMonth.value = parseInt(parts[1]) || 1
-    selectedDay.value = parseInt(parts[2]) || 1
-  }
-}
-
-// مقداردهی اولیه
-watch(() => props.modelValue, () => {
-  initializeDate()
+watch(() => props.modelValue, (newValue) => {
+  const now = new Date()
+  const jalali = dateToJalali(newValue || now)
+  selectedYear.value = jalali.jy
+  selectedMonth.value = jalali.jm
+  selectedDay.value = jalali.jd
 }, { immediate: true })
 
-// مقداردهی مجدد هنگام باز شدن picker
-watch(showPicker, (isOpen) => {
-  if (isOpen) {
-    initializeDate()
+// تنظیم مقدار پیش‌فرض
+onMounted(() => {
+  if (import.meta.client) {
+    const now = new Date() // در کلاینت از تاریخ واقعی استفاده کن
+    const jalali = dateToJalali(now)
+    selectedYear.value = jalali.jy
+    selectedMonth.value = jalali.jm
+    selectedDay.value = jalali.jd
   }
 })
 </script>
 
 <style scoped>
 .persian-date-picker {
-  width: 100%;
+  direction: rtl;
 }
 
 .date-picker-content {
   direction: rtl;
 }
-</style>
 
+.date-picker-content .v-field__input {
+  text-align: center;
+}
+</style>

@@ -19,7 +19,7 @@
     </div>
 
     <VRow class="week-scroll flex-nowrap">
-      <VCol v-for="date in week.currentWeek" :key="date.toDateString()" cols="12" sm="6" md="4" lg="3" xl="2">
+      <VCol v-for="date in week.currentWeek" :key="date.toDateString()" cols="12" sm="6" md="4" lg="2" xl="2">
         <VCard :class="['day-card', { 'is-today': week.isToday(date), 'is-weekend': isWeekend(date) }]" :title="formatDate(date)" dir="rtl">
           <VCardText v-if="!isWeekend(date)" style="max-height: 70vh; overflow: auto;" @scroll.passive="onScroll(date, $event)">
             <div
@@ -113,23 +113,40 @@ onMounted(() => {
     visibleCount[d.toDateString()] = perPage
   }
   // sync تغییرات بین تب‌ها
-  if (process.client) {
+  if (import.meta.client) {
     window.addEventListener('storage', (e) => {
       if (e.key === 'tasks_days_v1' && e.newValue) {
-        try { tasksStore.days = JSON.parse(e.newValue) } catch {}
+        try { 
+          const parsed = JSON.parse(e.newValue) as any[]
+          // تبدیل رشته‌های تاریخ به Date objects
+          tasksStore.days = parsed.map(day => ({
+            ...day,
+            date: new Date(day.date),
+            tasks: day.tasks.map((task: any) => ({
+              ...task,
+              dueDate: new Date(task.dueDate)
+            }))
+          }))
+        } catch {}
       }
     })
   }
 })
 
 function visibleTasks(date: Date) {
-  const day = days.value.find(d => d.date.toDateString() === date.toDateString())
+  const day = days.value.find(d => {
+    const dayDate = d.date instanceof Date ? d.date : new Date(d.date)
+    return dayDate.toDateString() === date.toDateString()
+  })
   const list = applyFilter(day ? day.tasks : [], search.value, status.value)
   return list.slice(0, visibleCount[date.toDateString()] || perPage)
 }
 
 function canLoadMore(date: Date) {
-  const day = days.value.find(d => d.date.toDateString() === date.toDateString())
+  const day = days.value.find(d => {
+    const dayDate = d.date instanceof Date ? d.date : new Date(d.date)
+    return dayDate.toDateString() === date.toDateString()
+  })
   const total = applyFilter(day ? day.tasks : [], search.value, status.value).length
   const current = visibleCount[date.toDateString()] || perPage
   return current < total

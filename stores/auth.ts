@@ -6,6 +6,8 @@ interface AuthState {
 }
 
 type Credential = { username: string; password: string; user: UserInfo }
+
+const AUTH_STORAGE_KEY = 'auth_user'
 const MOCK_USERS: Record<'admin' | 'guest', Credential> = {
   admin: {
     username: 'admin',
@@ -36,8 +38,8 @@ export const useAuthStore = defineStore('auth', {
       this.currentUser = MOCK_USERS[userKey].user
       // ذخیره در localStorage برای sync تب‌ها
       if (import.meta.client) {
-        localStorage.setItem('auth_user', JSON.stringify(this.currentUser))
-        window.dispatchEvent(new StorageEvent('storage', { key: 'auth_user' }))
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(this.currentUser))
+        window.dispatchEvent(new StorageEvent('storage', { key: AUTH_STORAGE_KEY }))
       }
     },
     loginWithCredentials(username: string, password: string): boolean {
@@ -45,21 +47,21 @@ export const useAuthStore = defineStore('auth', {
       if (!cred) return false
       this.currentUser = cred.user
       if (import.meta.client) {
-        localStorage.setItem('auth_user', JSON.stringify(this.currentUser))
-        window.dispatchEvent(new StorageEvent('storage', { key: 'auth_user' }))
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(this.currentUser))
+        window.dispatchEvent(new StorageEvent('storage', { key: AUTH_STORAGE_KEY }))
       }
       return true
     },
     logout() {
       this.currentUser = null
-      if (process.client) {
-        localStorage.removeItem('auth_user')
-        window.dispatchEvent(new StorageEvent('storage', { key: 'auth_user' }))
+      if (import.meta.client) {
+        localStorage.removeItem(AUTH_STORAGE_KEY)
+        window.dispatchEvent(new StorageEvent('storage', { key: AUTH_STORAGE_KEY }))
       }
     },
     loadFromStorage() {
-      if (!process.client) return
-      const raw = localStorage.getItem('auth_user')
+      if (!import.meta.client) return
+      const raw = localStorage.getItem(AUTH_STORAGE_KEY)
       if (raw) {
         try {
           this.currentUser = JSON.parse(raw) as UserInfo
@@ -67,7 +69,7 @@ export const useAuthStore = defineStore('auth', {
           this.currentUser = null
         }
       }
-    }
+    },
   }
 })
 
