@@ -1,5 +1,3 @@
-// تعریف انواع داده با TypeScript ساده و قابل فهم
-
 export enum TaskStatus {
   Todo = 'todo',
   InProgress = 'in_progress',
@@ -11,11 +9,11 @@ export interface Task {
   title: string
   description?: string
   status: TaskStatus
-  dueDate: Date // تاریخ سررسید
+  dueDate: Date
 }
 
 export interface DayColumn {
-  date: Date // تاریخ روز
+  date: Date
   tasks: Task[]
 }
 

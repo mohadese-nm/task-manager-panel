@@ -57,7 +57,6 @@ function fillFromProps() {
     selectedDate.value = props.date || new Date()
   }
   
-  // اطمینان از معتبر بودن تاریخ
   if (isNaN(selectedDate.value.getTime())) {
     selectedDate.value = getTodayConsistent()
   }
@@ -72,14 +71,12 @@ watch(model, (open) => {
     status.value = TaskStatus.Todo
     selectedDate.value = props.date || new Date()
     
-    // اطمینان از معتبر بودن تاریخ
     if (isNaN(selectedDate.value.getTime())) {
       selectedDate.value = getTodayConsistent()
     }
   }
 })
 
-// مقداردهی اولیه
 onMounted(() => {
   fillFromProps()
 })

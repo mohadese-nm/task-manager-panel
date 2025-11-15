@@ -82,7 +82,7 @@ body, .v-application {
 }
 
 .is-weekend {
-  background: rgba(255, 193, 7, 0.12) !important; /* زرد ملایم برای آخر هفته */
+  background: rgba(255, 193, 7, 0.12) !important;
 }
 
 .filter-bar {
@@ -102,7 +102,6 @@ body, .v-application {
   border-radius: 12px !important;
 }
 
-/* حذف underline داخلی در برخی تم‌ها برای فیلدها */
 .outlined-primary .v-field__overlay { display: none; }
 
 /* Utilities */

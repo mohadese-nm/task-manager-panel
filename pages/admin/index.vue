@@ -112,13 +112,11 @@ onMounted(() => {
   for (const d of week.currentWeek) {
     visibleCount[d.toDateString()] = perPage
   }
-  // sync تغییرات بین تب‌ها
   if (import.meta.client) {
     window.addEventListener('storage', (e) => {
       if (e.key === 'tasks_days_v1' && e.newValue) {
         try { 
           const parsed = JSON.parse(e.newValue) as any[]
-          // تبدیل رشته‌های تاریخ به Date objects
           tasksStore.days = parsed.map(day => ({
             ...day,
             date: new Date(day.date),
@@ -213,7 +211,6 @@ function onSave(payload: { date: Date, task: Omit<Task, 'id' | 'dueDate'>, editi
     const id = payload.editingId
     const original = editingTask.value
     if (original && payload.date.toDateString() !== original.dueDate.toDateString()) {
-      // اگر تاریخ تغییر کرد، تسک را به روز جدید منتقل کن
       moveTask(id, payload.date)
     }
     updateTask(id, (t) => ({ ...t, ...payload.task }))
@@ -233,9 +230,7 @@ function formatDate(date: Date) {
 useSeoMeta({ title: 'برای انجام' })
 
 function isWeekend(date: Date) {
-  const day = date.getDay() // 0=Sun ... 6=Sat
-  // پنجشنبه: 4، جمعه: 5 در تقویم fa-IR؟ به دلیل تفاوت، با تاریخ میلادی استاندارد: Thu=4, Fri=5
-  // در ایران آخر هفته پنجشنبه و جمعه است؛ در گِت‌دیِ بین‌المللی Thu=4 و Fri=5
+  const day = date.getDay()
   return day === 4 || day === 5
 }
 

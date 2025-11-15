@@ -1,4 +1,3 @@
-// پیکربندی Nuxt 3 با SSR، TypeScript، Pinia و Vuetify
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
@@ -10,9 +9,8 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify']
   },
-  // Tree shaking optimizations
   experimental: {
-    payloadExtraction: false // کاهش حجم bundle
+    payloadExtraction: false
   },
   nitro: {
     compressPublicAssets: true,
@@ -45,7 +43,6 @@ export default defineNuxtConfig({
         autoImport: true
       })
     ],
-    // Tree shaking optimizations
     build: {
       rollupOptions: {
         output: {

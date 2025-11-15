@@ -10,7 +10,7 @@ interface TasksState {
 
 const createMockWeek = (): DayColumn[] => {
   const today = new Date()
-  const day = today.getDay() // 0=Sun ... 6=Sat
+  const day = today.getDay()
   const diffToSaturday = (day + 1) % 7
   const start = new Date(today)
   start.setDate(today.getDate() - diffToSaturday)
@@ -33,7 +33,6 @@ const createMockWeek = (): DayColumn[] => {
 const STORAGE_KEY = 'tasks_days_v1'
 
 function sanitizeDays(days: DayColumn[]): DayColumn[] {
-  // حذف الگوهای تاریخ در انتهای توضیحات مانند: " on 2025-09-22"
   const pattern = /\s+on\s+\d{4}-\d{2}-\d{2}$/
   for (const day of days) {
     for (const task of day.tasks) {
@@ -63,7 +62,6 @@ export const useTasksStore = defineStore('tasks', {
         if (raw) {
           try {
             const parsed = JSON.parse(raw) as any[]
-            // تبدیل رشته‌های تاریخ به Date objects
             this.days = sanitizeDays(parsed.map(day => ({
               ...day,
               date: new Date(day.date),
@@ -72,7 +70,6 @@ export const useTasksStore = defineStore('tasks', {
                 dueDate: new Date(task.dueDate)
               }))
             })))
-            // در صورت تغییر، ذخیره مجدد   
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.days))
           } catch {
             this.days = createMockWeek()

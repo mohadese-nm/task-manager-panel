@@ -7,7 +7,7 @@ export function dateToJalali(date: Date): { jy: number, jm: number, jd: number }
   }
   
   const gy = date.getFullYear()
-  const gm = date.getMonth() + 1 // ماه در Date از 0 شروع می‌شود
+  const gm = date.getMonth() + 1
   const gd = date.getDate()
   
   const { jy, jm, jd } = toJalaali(gy, gm, gd)
@@ -58,7 +58,7 @@ export function jalaliStrToDate(jalaliStr: string): Date | null {
   const jd = parseInt(m[3], 10)
   try {
     const { gy, gm, gd } = toGregorian(jy, jm, jd)
-    const date = new Date(gy, gm - 1, gd) // ماه در Date از 0 شروع می‌شود
+    const date = new Date(gy, gm - 1, gd)
     return isNaN(date.getTime()) ? null : date
   } catch {
     return null
@@ -75,5 +75,5 @@ export function jalaliStrToIso(jalaliStr: string): string | null {
 
 export function jalaliToDate(jy: number, jm: number, jd: number): Date {
   const { gy, gm, gd } = toGregorian(jy, jm, jd)
-  return new Date(gy, gm - 1, gd) // ماه در Date از 0 شروع می‌شود
+  return new Date(gy, gm - 1, gd)
 }

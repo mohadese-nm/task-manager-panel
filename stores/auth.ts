@@ -36,7 +36,6 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     loginAs(userKey: 'admin' | 'guest') {
       this.currentUser = MOCK_USERS[userKey].user
-      // ذخیره در localStorage برای sync تب‌ها
       if (import.meta.client) {
         localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(this.currentUser))
         window.dispatchEvent(new StorageEvent('storage', { key: AUTH_STORAGE_KEY }))

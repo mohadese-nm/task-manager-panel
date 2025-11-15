@@ -21,7 +21,6 @@
         
         <VCardText>
           <div class="date-picker-content">
-            <!-- انتخاب سال -->
             <div class="mb-4">
               <label class="text-body-2 text-medium-emphasis mb-2 d-block">سال</label>
               <VSelect
@@ -33,7 +32,6 @@
               />
             </div>
             
-            <!-- انتخاب ماه -->
             <div class="mb-4">
               <label class="text-body-2 text-medium-emphasis mb-2 d-block">ماه</label>
               <VSelect
@@ -45,7 +43,6 @@
               />
             </div>
             
-            <!-- انتخاب روز -->
             <div class="mb-4">
               <label class="text-body-2 text-medium-emphasis mb-2 d-block">روز</label>
               <VSelect
@@ -99,7 +96,6 @@ const selectedDay = ref(1)
 
 const displayValue = computed(() => {
   if (!props.modelValue) {
-    // نمایش تاریخ امروز به عنوان پیش‌فرض
     const today = new Date()
     const jalali = dateToJalali(today)
     return `${jalali.jy}/${jalali.jm.toString().padStart(2, '0')}/${jalali.jd.toString().padStart(2, '0')}`
@@ -146,17 +142,15 @@ const dayItems = computed(() => {
 function getDaysInJalaliMonth(year: number, month: number): number {
   if (month <= 6) return 31
   if (month <= 11) return 30
-  // برای اسفند، بررسی سال کبیسه
   return isLeapJalaliYear(year) ? 30 : 29
 }
 
 function isLeapJalaliYear(year: number): boolean {
-  const jalali = dateToJalali(new Date(year + 621, 2, 20)) // 20 مارس
+  const jalali = dateToJalali(new Date(year + 621, 2, 20))
   return jalali.jy % 4 === 3
 }
 
 function updateDate() {
-  // فقط برای به‌روزرسانی لیست روزها
 }
 
 function confirmDate() {
@@ -165,7 +159,6 @@ function confirmDate() {
   showPicker.value = false
 }
 
-// مقداردهی اولیه
 watch(() => props.modelValue, (newValue) => {
   const now = new Date()
   const jalali = dateToJalali(newValue || now)
@@ -174,10 +167,9 @@ watch(() => props.modelValue, (newValue) => {
   selectedDay.value = jalali.jd
 }, { immediate: true })
 
-// تنظیم مقدار پیش‌فرض
 onMounted(() => {
   if (import.meta.client) {
-    const now = new Date() // در کلاینت از تاریخ واقعی استفاده کن
+    const now = new Date()
     const jalali = dateToJalali(now)
     selectedYear.value = jalali.jy
     selectedMonth.value = jalali.jm

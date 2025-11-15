@@ -1,12 +1,8 @@
-// پلاگین صدا فقط در کلاینت (برای SSR-safe)
-// استفاده از Web Audio API برای سازگاری بهتر
-
 type SoundApi = {
   playCreate: () => void
   playDone: () => void
 }
 
-// ایجاد صدا با Web Audio API
 function createBeep(frequency: number, duration: number = 200) {
   return () => {
     try {
@@ -32,8 +28,8 @@ function createBeep(frequency: number, duration: number = 200) {
 }
 
 export default defineNuxtPlugin(() => {
-  const playCreate = createBeep(800, 150) // صدای ایجاد تسک
-  const playDone = createBeep(600, 200)   // صدای تکمیل تسک
+  const playCreate = createBeep(800, 150)
+  const playDone = createBeep(600, 200)
 
   const sound: SoundApi = { playCreate, playDone }
   return {

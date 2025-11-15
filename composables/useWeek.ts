@@ -1,5 +1,3 @@
-// محاسبه هفته جاری، تشخیص امروز، و ساخت آرایه تاریخ‌ها
-
 export const useWeek = () => {
   const today = new Date()
   const isToday = (date: Date) => date.toDateString() === today.toDateString()
