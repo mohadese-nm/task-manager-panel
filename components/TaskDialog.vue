@@ -1,23 +1,23 @@
 <template>
   <VDialog v-model="model" max-width="520">
     <VCard>
-      <VCardTitle>{{ editing ? 'ویرایش تسک' : 'ایجاد تسک' }}</VCardTitle>
+      <VCardTitle>{{ editing ? $t('Edit Task') : $t('Create Task') }}</VCardTitle>
       <VCardText>
-        <VTextField v-model="title" label="عنوان" />
-        <VTextarea v-model="description" label="توضیحات" auto-grow />
-        <VSelect :items="statusItems" v-model="status" label="وضعیت" />
+        <VTextField v-model="title" :label="$t('Title')" />
+        <VTextarea v-model="description" :label="$t('Description')" auto-grow />
+        <VSelect :items="statusItems" v-model="status" :label="$t('Status')" />
         <div class="mb-4">
           <PersianDatePicker
             v-model="selectedDate"
-            label="تاریخ سررسید"
-            placeholder="انتخاب تاریخ"
+            :label="$t('Due Date')"
+            :placeholder="$t('Select Date')"
           />
         </div>
       </VCardText>
       <VCardActions>
         <VSpacer />
-        <VBtn variant="text" @click="emit('update:modelValue', false)">انصراف</VBtn>
-        <VBtn color="primary" @click="save">ذخیره</VBtn>
+        <VBtn variant="text" @click="emit('update:modelValue', false)">{{ $t('Cancel') }}</VBtn>
+        <VBtn color="primary" @click="save">{{ $t('Save') }}</VBtn>
       </VCardActions>
     </VCard>
   </VDialog>
@@ -58,7 +58,7 @@ function fillFromProps() {
   }
   
   if (isNaN(selectedDate.value.getTime())) {
-    selectedDate.value = getTodayConsistent()
+    selectedDate.value = new Date()
   }
 }
 
@@ -72,7 +72,7 @@ watch(model, (open) => {
     selectedDate.value = props.date || new Date()
     
     if (isNaN(selectedDate.value.getTime())) {
-      selectedDate.value = getTodayConsistent()
+      selectedDate.value = new Date()
     }
   }
 })
@@ -82,14 +82,14 @@ onMounted(() => {
 })
 
 const statusItems = [
-  { title: 'انجام نشده', value: TaskStatus.Todo },
-  { title: 'در حال انجام', value: TaskStatus.InProgress },
-  { title: 'انجام شده', value: TaskStatus.Done }
+  { title: $t('To Do'), value: TaskStatus.Todo },
+  { title: $t('In Progress'), value: TaskStatus.InProgress },
+  { title: $t('Done'), value: TaskStatus.Done }
 ]
 
 function save() {
   if (!selectedDate.value || isNaN(selectedDate.value.getTime())) {
-    alert('لطفا تاریخ معتبر انتخاب کنید.')
+    alert($t('Please select a valid date'))
     return
   }
   

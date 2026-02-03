@@ -18,13 +18,17 @@ const createMockWeek = (): DayColumn[] => {
   for (let i = 0; i < 7; i++) {
     const d = new Date(start)
     d.setDate(start.getDate() + i)
-    const tasks: Task[] = Array.from({ length: 25 }).map((_, idx) => ({
-      id: `${d.toISOString().slice(0, 10)}-${idx + 1}`,
-      title: `Task ${idx + 1}`,
-      description: `${idx + 1} لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.`,
-      status: idx % 3 === 0 ? TaskStatus.Todo : idx % 3 === 1 ? TaskStatus.InProgress : TaskStatus.Done,
-      dueDate: new Date(d)
-    }))
+    const tasks: Task[] = Array.from({ length: 25 }).map((_, idx) => {
+      const created = new Date(d)
+      return {
+        id: `${d.toISOString().slice(0, 10)}-${idx + 1}`,
+        title: `Task ${idx + 1}`,
+        description: `${idx + 1} لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.`,
+        status: idx % 3 === 0 ? TaskStatus.Todo : idx % 3 === 1 ? TaskStatus.InProgress : TaskStatus.Done,
+        dueDate: new Date(d),
+        createdAt: created
+      }
+    })
     days.push({ date: new Date(d), tasks })
   }
   return days
@@ -53,6 +57,19 @@ export const useTasksStore = defineStore('tasks', {
   getters: {
     dayByDate: (state) => {
       return (date: Date) => state.days.find(d => d.date.toDateString() === date.toDateString())
+    },
+    tasksByStatus: (state) => {
+      const all: Task[] = state.days.flatMap(d => d.tasks)
+      const sortByDate = (a: Task, b: Task) => {
+        const aDate = (a.createdAt || a.dueDate).getTime()
+        const bDate = (b.createdAt || b.dueDate).getTime()
+        return bDate - aDate
+      }
+      return {
+        [TaskStatus.Todo]: all.filter(t => t.status === TaskStatus.Todo).sort(sortByDate),
+        [TaskStatus.InProgress]: all.filter(t => t.status === TaskStatus.InProgress).sort(sortByDate),
+        [TaskStatus.Done]: all.filter(t => t.status === TaskStatus.Done).sort(sortByDate)
+      }
     }
   },
   actions: {
@@ -67,7 +84,8 @@ export const useTasksStore = defineStore('tasks', {
               date: new Date(day.date),
               tasks: day.tasks.map((task: any) => ({
                 ...task,
-                dueDate: new Date(task.dueDate)
+                dueDate: new Date(task.dueDate),
+                createdAt: task.createdAt ? new Date(task.createdAt) : new Date(task.dueDate)
               }))
             })))
             localStorage.setItem(STORAGE_KEY, JSON.stringify(this.days))
@@ -93,9 +111,9 @@ export const useTasksStore = defineStore('tasks', {
     setStatusFilter(filter: TasksState['statusFilter']) {
       this.statusFilter = filter
     },
-    addTask(date: Date, partial: Omit<Task, 'id' | 'dueDate'>) {
+    addTask(date: Date, partial: Omit<Task, 'id' | 'dueDate' | 'createdAt'>) {
       const day = this.dayByDate(date)
-      const newTask: Task = { id: crypto.randomUUID(), dueDate: new Date(date), ...partial }
+      const newTask: Task = { id: crypto.randomUUID(), dueDate: new Date(date), createdAt: new Date(), ...partial }
       if (day) day.tasks.unshift(newTask)
       else this.days.push({ date: new Date(date), tasks: [newTask] })
       this.persist()

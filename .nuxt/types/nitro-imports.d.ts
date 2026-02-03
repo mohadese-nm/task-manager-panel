@@ -3,16 +3,20 @@ declare global {
   const { buildAssetsURL: __buildAssetsURL, publicAssetsURL: __publicAssetsURL }: typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/utils/paths')
   const { cachedEventHandler, cachedFunction, defineCachedEventHandler, defineCachedFunction }: typeof import('../../node_modules/nitropack/dist/runtime/internal/cache')
   const { defineAppConfig }: typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/utils/config')
+  const { defineI18nConfig, defineI18nLocale }: typeof import('../../node_modules/@nuxtjs/i18n/dist/runtime/composables/shared')
+  const { defineI18nLocaleDetector }: typeof import('../../node_modules/@nuxtjs/i18n/dist/runtime/composables/server')
   const { defineNitroErrorHandler }: typeof import('../../node_modules/nitropack/dist/runtime/internal/error/utils')
   const { defineNitroPlugin, nitroPlugin }: typeof import('../../node_modules/nitropack/dist/runtime/internal/plugin')
   const { defineRenderHandler }: typeof import('../../node_modules/nitropack/dist/runtime/internal/renderer')
   const { defineRouteMeta }: typeof import('../../node_modules/nitropack/dist/runtime/internal/meta')
   const { defineTask, runTask }: typeof import('../../node_modules/nitropack/dist/runtime/internal/task')
+  const { getCookieLocale, getHeaderLanguage, getHeaderLanguages, getHeaderLocale, getHeaderLocales, getPathLocale, getQueryLocale, setCookieLocale, tryCookieLocale, tryHeaderLocale, tryHeaderLocales, tryPathLocale, tryQueryLocale }: typeof import('../../node_modules/@intlify/utils/dist/h3')
   const { getRouteRules }: typeof import('../../node_modules/nitropack/dist/runtime/internal/route-rules')
   const { useAppConfig, useRuntimeConfig }: typeof import('../../node_modules/nitropack/dist/runtime/internal/config')
   const { useEvent }: typeof import('../../node_modules/nitropack/dist/runtime/internal/context')
   const { useNitroApp }: typeof import('../../node_modules/nitropack/dist/runtime/internal/app')
   const { useStorage }: typeof import('../../node_modules/nitropack/dist/runtime/internal/storage')
+  const { useTranslation }: typeof import('../../node_modules/@intlify/h3')
 }
 export { useNitroApp } from 'nitropack/runtime/internal/app';
 export { useRuntimeConfig, useAppConfig } from 'nitropack/runtime/internal/config';
@@ -26,5 +30,9 @@ export { useEvent } from 'nitropack/runtime/internal/context';
 export { defineTask, runTask } from 'nitropack/runtime/internal/task';
 export { defineNitroErrorHandler } from 'nitropack/runtime/internal/error/utils';
 export { appendCorsHeaders, appendCorsPreflightHeaders, appendHeader, appendHeaders, appendResponseHeader, appendResponseHeaders, assertMethod, callNodeListener, clearResponseHeaders, clearSession, createApp, createAppEventHandler, createError, createEvent, createEventStream, createRouter, defaultContentType, defineEventHandler, defineLazyEventHandler, defineNodeListener, defineNodeMiddleware, defineRequestMiddleware, defineResponseMiddleware, defineWebSocket, defineWebSocketHandler, deleteCookie, dynamicEventHandler, eventHandler, fetchWithEvent, fromNodeMiddleware, fromPlainHandler, fromWebHandler, getCookie, getHeader, getHeaders, getMethod, getProxyRequestHeaders, getQuery, getRequestFingerprint, getRequestHeader, getRequestHeaders, getRequestHost, getRequestIP, getRequestPath, getRequestProtocol, getRequestURL, getRequestWebStream, getResponseHeader, getResponseHeaders, getResponseStatus, getResponseStatusText, getRouterParam, getRouterParams, getSession, getValidatedQuery, getValidatedRouterParams, handleCacheHeaders, handleCors, isCorsOriginAllowed, isError, isEvent, isEventHandler, isMethod, isPreflightRequest, isStream, isWebResponse, lazyEventHandler, parseCookies, promisifyNodeListener, proxyRequest, readBody, readFormData, readMultipartFormData, readRawBody, readValidatedBody, removeResponseHeader, sanitizeStatusCode, sanitizeStatusMessage, sealSession, send, sendError, sendIterable, sendNoContent, sendProxy, sendRedirect, sendStream, sendWebResponse, serveStatic, setCookie, setHeader, setHeaders, setResponseHeader, setResponseHeaders, setResponseStatus, splitCookiesString, toEventHandler, toNodeListener, toPlainHandler, toWebHandler, toWebRequest, unsealSession, updateSession, useBase, useSession, writeEarlyHints } from 'h3';
-export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from 'D:/projects/to-do-panel/node_modules/nuxt/dist/core/runtime/nitro/utils/paths';
-export { defineAppConfig } from 'D:/projects/to-do-panel/node_modules/nuxt/dist/core/runtime/nitro/utils/config';
+export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from 'C:/Projects/task-manager-panel/node_modules/nuxt/dist/core/runtime/nitro/utils/paths';
+export { defineAppConfig } from 'C:/Projects/task-manager-panel/node_modules/nuxt/dist/core/runtime/nitro/utils/config';
+export { defineI18nLocale, defineI18nConfig } from 'C:/Projects/task-manager-panel/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared';
+export { defineI18nLocaleDetector } from 'C:/Projects/task-manager-panel/node_modules/@nuxtjs/i18n/dist/runtime/composables/server';
+export { useTranslation } from '@intlify/h3';
+export { getCookieLocale, getHeaderLanguage, getHeaderLanguages, getHeaderLocale, getHeaderLocales, getPathLocale, getQueryLocale, setCookieLocale, tryCookieLocale, tryHeaderLocale, tryHeaderLocales, tryPathLocale, tryQueryLocale } from '@intlify/utils/h3';

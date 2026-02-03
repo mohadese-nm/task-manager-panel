@@ -20,6 +20,16 @@
 
 ## نصب و راه‌اندازی
 
+### IDE و TypeScript در فایل‌های Vue
+
+اگر در قالب فایل‌های `.vue` خطای «Cannot find name» می‌بینید (مثلاً برای `openCreate` یا متغیرهای script setup):
+
+1. افزونه **Vue - Official (Volar)** را نصب کنید و در صورت نصب بودن **Vetur** آن را غیرفعال کنید.
+2. از Command Palette دستور **Vue: Reload Project** یا **Developer: Reload Window** را اجرا کنید.
+3. پروژه از `.vscode/settings.json` استفاده می‌کند؛ در صورت استفاده از Cursor/VS Code، Volar با Take Over Mode برای type-check فایل‌های Vue استفاده می‌شود.
+
+کد در ران‌تایم درست کار می‌کند؛ این خطاها فقط مربوط به type-check قالب در محیط توسعه هستند.
+
 ### پیش‌نیازها
 
 - نسخه Node.js: **Node 20 LTS**

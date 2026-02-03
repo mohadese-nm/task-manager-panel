@@ -1,0 +1,15 @@
+{"location":"localeClick:setFalse","message":"setting localeMenuOpen=false","data":{"code":"en","localeBefore":"fa","t0":9914.700000000186},"hypothesisId":"A","timestamp":1770129534863,"sessionId":"debug-session"}
+{"location":"localeClick:beforeNextTick","message":"before nextTick","data":{"code":"en","ms":0.5},"hypothesisId":"A","timestamp":1770129534863,"sessionId":"debug-session"}
+{"location":"localeClick:afterNextTick","message":"after nextTick (menu should be closed)","data":{"code":"en","ms":13.699999999720603,"totalMs":14.199999999720603},"hypothesisId":"A","timestamp":1770129534877,"sessionId":"debug-session"}
+{"location":"localeClick:rAF2:start","message":"second rAF, about to set locale","data":{"code":"en","localeBefore":"fa","msSinceClick":34.89999999990687},"hypothesisId":"B","timestamp":1770129534897,"sessionId":"debug-session"}
+{"location":"localeClick:rAF2:done","message":"locale set in rAF2","data":{"code":"en","ms":3.7999999998137355},"hypothesisId":"B","timestamp":1770129534901,"sessionId":"debug-session"}
+{"location":"localeClick:setFalse","message":"setting localeMenuOpen=false","data":{"code":"fa","localeBefore":"en","t0":14162.899999999907},"hypothesisId":"A","timestamp":1770129539111,"sessionId":"debug-session"}
+{"location":"localeClick:beforeNextTick","message":"before nextTick","data":{"code":"fa","ms":0.5},"hypothesisId":"A","timestamp":1770129539111,"sessionId":"debug-session"}
+{"location":"localeClick:afterNextTick","message":"after nextTick (menu should be closed)","data":{"code":"fa","ms":10.5,"totalMs":11},"hypothesisId":"A","timestamp":1770129539122,"sessionId":"debug-session"}
+{"location":"localeClick:rAF2:start","message":"second rAF, about to set locale","data":{"code":"fa","localeBefore":"en","msSinceClick":36.10000000009313},"hypothesisId":"B","timestamp":1770129539147,"sessionId":"debug-session"}
+{"location":"localeClick:rAF2:done","message":"locale set in rAF2","data":{"code":"fa","ms":3.2999999998137355},"hypothesisId":"B","timestamp":1770129539150,"sessionId":"debug-session"}
+{"location":"localeClick:setFalse","message":"setting localeMenuOpen=false","data":{"code":"en","localeBefore":"fa","t0":87467.79999999981},"hypothesisId":"A","timestamp":1770129612416,"sessionId":"debug-session"}
+{"location":"localeClick:beforeNextTick","message":"before nextTick","data":{"code":"en","ms":0.900000000372529},"hypothesisId":"A","timestamp":1770129612416,"sessionId":"debug-session"}
+{"location":"localeClick:afterNextTick","message":"after nextTick (menu should be closed)","data":{"code":"en","ms":16.699999999720603,"totalMs":17.600000000093132},"hypothesisId":"A","timestamp":1770129612433,"sessionId":"debug-session"}
+{"location":"localeClick:rAF2:start","message":"second rAF, about to set locale","data":{"code":"en","localeBefore":"fa","msSinceClick":66.10000000009313},"hypothesisId":"B","timestamp":1770129612482,"sessionId":"debug-session"}
+{"location":"localeClick:rAF2:done","message":"locale set in rAF2","data":{"code":"en","ms":7.600000000093132},"hypothesisId":"B","timestamp":1770129612489,"sessionId":"debug-session"}

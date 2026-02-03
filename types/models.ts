@@ -10,6 +10,7 @@ export interface Task {
   description?: string
   status: TaskStatus
   dueDate: Date
+  createdAt?: Date
 }
 
 export interface DayColumn {

@@ -1,7 +1,7 @@
 
 import { createVuetify, type ThemeDefinition } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
-import { fa } from 'vuetify/locale'
+import { fa, en } from 'vuetify/locale'
 import 'vuetify/styles'
 
 const appTheme: ThemeDefinition = {
@@ -14,7 +14,8 @@ const appTheme: ThemeDefinition = {
   }
 }
 
-export default defineNuxtPlugin((_nuxtApp) => {
+export default defineNuxtPlugin((nuxtApp) => {
+  const i18nLocale = (nuxtApp.$i18n as { locale?: { value?: string } })?.locale?.value ?? 'en'
   const vuetify = createVuetify({
     theme: {
       defaultTheme: 'appTheme',
@@ -26,14 +27,14 @@ export default defineNuxtPlugin((_nuxtApp) => {
       sets: { mdi }
     },
     locale: {
-      locale: 'fa',
-      messages: { fa },
-      rtl: { fa: true }
+      locale: i18nLocale,
+      fallback: 'en',
+      messages: { fa, en },
+      rtl: { fa: true, en: false }
     }
   })
 
-  // @ts-expect-error - نوع app.use در زمان اجرا معتبر است
-  _nuxtApp.vueApp.use(vuetify)
+  nuxtApp.vueApp.use(vuetify)
 })
 
 

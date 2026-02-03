@@ -16,9 +16,16 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
     compatibilityDate: '2025-09-23'
   },
-  modules: [
-    '@pinia/nuxt'
-  ],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n'],
+  i18n: {
+    langDir: 'locales',
+    locales: [
+      { code: 'en', language: 'en-US', file: 'en.json' },
+      { code: 'fa', language: 'fa-IR', file: 'fa.json' }
+    ],
+    defaultLocale: 'en',
+    strategy: 'no_prefix',
+  },
   css: [
     'vuetify/styles',
     '@mdi/font/css/materialdesignicons.css',
@@ -56,7 +63,6 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      htmlAttrs: { lang: 'fa', dir: 'rtl' },
       title: 'پنل کارها - Panell To',
       meta: [
         { name: 'description', content: 'مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript' },
@@ -72,5 +78,3 @@ export default defineNuxtConfig({
     }
   }
 })
-
-

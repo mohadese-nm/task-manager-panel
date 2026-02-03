@@ -1,17 +1,12 @@
 <template>
-  <VCard :class="['task-card', statusClass, { 'task-card-done': task.status === TaskStatus.Done }]" elevation="2" class="mb-2 px-2 py-2" dir="rtl">
+  <VCard :class="['task-card', statusClass, { 'task-card-done': task.status === TaskStatus.Done }]" elevation="2"
+    class="mb-2 px-2 py-2" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
 
     <div class="d-flex align-center justify-space-between">
       <div class="d-flex align-center" style="gap: 8px">
         <VCheckboxBtn :model-value="task.status === TaskStatus.Done" @click.stop="toggle()" />
         <div class="text-subtitle-2">{{ task.title }}</div>
-        <VChip
-          :color="chipColor"
-          size="small"
-          label
-          variant="tonal"
-          class="mx-1"
-        >
+        <VChip :color="chipColor" size="small" label variant="tonal" class="mx-1">
           {{ statusLabel }}
         </VChip>
       </div>
@@ -26,49 +21,42 @@
             <template #append>
               <VIcon icon="mdi-pencil-outline" />
             </template>
-            <VListItemTitle>ویرایش</VListItemTitle>
+            <VListItemTitle>{{ $t('Edit') }}</VListItemTitle>
           </VListItem>
           <VListItem value="remove" @click.stop="emit('remove', task)">
             <template #append>
               <VIcon icon="mdi-delete-outline" color="error" />
             </template>
-            <VListItemTitle class="text-error">حذف</VListItemTitle>
+            <VListItemTitle class="text-error">{{ $t('Delete') }}</VListItemTitle>
           </VListItem>
         </VList>
       </VMenu>
     </div>
 
     <div class="mt-2 px-2">
-      <div class="text-caption text-medium-emphasis" style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;">
+      <div class="text-caption text-medium-emphasis"
+        style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;">
         {{ displayDesc }}
-        <VBtn
-          v-if="!showFull && (task.description || '').length > 60"
-          variant="text"
-          size="x-small"
-          class="px-1"
-          color="primary"
-          @click.stop="showFull = true"
-        >
-          بیشتر
+        <VBtn v-if="!showFull && (task.description || '').length > 60" variant="text" size="x-small" class="px-1"
+          color="primary" @click.stop="showFull = true">
+          {{ $t('More') }}
         </VBtn>
-        <VBtn
-          v-else-if="showFull && (task.description || '').length > 60"
-          variant="text"
-          size="x-small"
-          class="px-1"
-          color="primary"
-          @click.stop="showFull = false"
-        >
-          کمتر
+        <VBtn v-else-if="showFull && (task.description || '').length > 60" variant="text" size="x-small" class="px-1"
+          color="primary" @click.stop="showFull = false">
+          {{ $t('Less') }}
         </VBtn>
       </div>
-      <div class="text-caption text-disabled mt-1" dir="rtl">{{ formatJalaliDate(task.dueDate) }}</div>
+      <div class="text-caption text-disabled mt-1 d-flex flex-column gap-0" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
+        <span>{{ $t('Due Date') }}: {{ formatDate(task.dueDate) }}</span>
+        <span>{{ $t('Created At') }}: {{ createdLabel }}</span>
+      </div>
     </div>
   </VCard>
 </template>
 
 <script setup lang="ts">
 import { TaskStatus, type Task } from '@/types/models'
+import { useFormatDate } from '@/composables/useFormatDate'
 
 const props = defineProps<{ task: Task }>()
 const emit = defineEmits<{
@@ -77,19 +65,9 @@ const emit = defineEmits<{
   (e: 'toggle', t: Task): void
 }>()
 
-function toggle() { emit('toggle', props.task) }
+const { formatDate, locale } = useFormatDate()
 
-function formatJalaliDate(date: Date) {
-  try {
-    const parts = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' }).formatToParts(date)
-    const day = parts.find(p => p.type === 'day')?.value || ''
-    const monthName = parts.find(p => p.type === 'month')?.value || ''
-    const year = parts.find(p => p.type === 'year')?.value || ''
-    return `${day} ${monthName} ${year}`
-  } catch {
-    return date.toLocaleDateString('fa-IR')
-  }
-}
+function toggle() { emit('toggle', props.task) }
 
 const showFull = ref(false)
 const displayDesc = computed(() => {
@@ -112,11 +90,15 @@ const chipColor = computed(() => {
 })
 
 const statusLabel = computed(() => {
-  if (props.task.status === TaskStatus.Todo) return 'انجام نشده'
-  if (props.task.status === TaskStatus.InProgress) return 'در حال انجام'
-  return 'انجام شده'
+  if (props.task.status === TaskStatus.Todo) return $t('To Do')
+  if (props.task.status === TaskStatus.InProgress) return $t('In Progress')
+  return $t('Done')
+})
+
+const createdLabel = computed(() => {
+  const d = props.task.createdAt || props.task.dueDate
+  if (!d) return '--'
+  return formatDate(d instanceof Date ? d : new Date(d))
 })
 
 </script>
-
-

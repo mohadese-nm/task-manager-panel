@@ -1,0 +1,11 @@
+{
+  "vue.server.hybridMode": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "volar.takeOverMode.enabled": true,
+  "files.associations": {
+    "*.vue": "vue"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
+}

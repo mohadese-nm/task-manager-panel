@@ -1,1 +1,1 @@
-export { default } from "file:///D:/projects/to-do-panel/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///C:/Projects/task-manager-panel/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

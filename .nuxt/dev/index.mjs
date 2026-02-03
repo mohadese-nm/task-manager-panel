@@ -3,40 +3,42 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://D:/projects/to-do-panel/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://D:/projects/to-do-panel/node_modules/@vue/shared/dist/shared.cjs.js';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/projects/to-do-panel/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/projects/to-do-panel/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://D:/projects/to-do-panel/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://D:/projects/to-do-panel/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://D:/projects/to-do-panel/node_modules/defu/dist/defu.mjs';
-import destr, { destr as destr$1 } from 'file://D:/projects/to-do-panel/node_modules/destr/dist/index.mjs';
-import { snakeCase } from 'file://D:/projects/to-do-panel/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://D:/projects/to-do-panel/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://D:/projects/to-do-panel/node_modules/devalue/index.js';
-import { isVNode, toValue, isRef } from 'file://D:/projects/to-do-panel/node_modules/vue/index.mjs';
-import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://D:/projects/to-do-panel/node_modules/unhead/dist/plugins.mjs';
-import { createHooks } from 'file://D:/projects/to-do-panel/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://D:/projects/to-do-panel/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://D:/projects/to-do-panel/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://D:/projects/to-do-panel/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://D:/projects/to-do-panel/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://D:/projects/to-do-panel/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://D:/projects/to-do-panel/node_modules/radix3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, getResponseStatus, createError, getCookie, setCookie, removeResponseHeader, getRouterParam, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatusText } from 'file://C:/Projects/task-manager-panel/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://C:/Projects/task-manager-panel/node_modules/@vue/shared/dist/shared.cjs.js';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Projects/task-manager-panel/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, joinRelativeURL, decodePath, withLeadingSlash as withLeadingSlash$1, withoutTrailingSlash } from 'file://C:/Projects/task-manager-panel/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file://C:/Projects/task-manager-panel/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://C:/Projects/task-manager-panel/node_modules/klona/dist/index.mjs';
+import defu, { defuFn, createDefu } from 'file://C:/Projects/task-manager-panel/node_modules/defu/dist/defu.mjs';
+import destr, { destr as destr$1 } from 'file://C:/Projects/task-manager-panel/node_modules/destr/dist/index.mjs';
+import { snakeCase } from 'file://C:/Projects/task-manager-panel/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Projects/task-manager-panel/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://C:/Projects/task-manager-panel/node_modules/devalue/index.js';
+import { isVNode, toValue, isRef } from 'file://C:/Projects/task-manager-panel/node_modules/vue/index.mjs';
+import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://C:/Projects/task-manager-panel/node_modules/unhead/dist/plugins.mjs';
+import { createHooks } from 'file://C:/Projects/task-manager-panel/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://C:/Projects/task-manager-panel/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Projects/task-manager-panel/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Projects/task-manager-panel/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Projects/task-manager-panel/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file://C:/Projects/task-manager-panel/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://C:/Projects/task-manager-panel/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file://D:/projects/to-do-panel/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://D:/projects/to-do-panel/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://D:/projects/to-do-panel/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://D:/projects/to-do-panel/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file://C:/Projects/task-manager-panel/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://C:/Projects/task-manager-panel/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://C:/Projects/task-manager-panel/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://C:/Projects/task-manager-panel/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://D:/projects/to-do-panel/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/projects/to-do-panel/node_modules/errx/dist/index.js';
+import { getContext } from 'file://C:/Projects/task-manager-panel/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Projects/task-manager-panel/node_modules/errx/dist/index.js';
+import { parsePath, withLeadingSlash, joinURL as joinURL$1 } from 'file://C:/Projects/task-manager-panel/node_modules/@nuxtjs/i18n/node_modules/ufo/dist/index.mjs';
+import { createRouterMatcher } from 'file://C:/Projects/task-manager-panel/node_modules/vue-router/vue-router.node.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file://D:/projects/to-do-panel/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://D:/projects/to-do-panel/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Projects/task-manager-panel/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://C:/Projects/task-manager-panel/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"D:/projects/to-do-panel/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"C:/Projects/task-manager-panel/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -44,18 +46,18 @@ for (const asset of serverAssets) {
   assets$1.mount(asset.baseName, unstorage_47drivers_47fs({ base: asset.dir, ignore: (asset?.ignore || []) }));
 }
 
-const storage = createStorage({});
+const storage$1 = createStorage({});
 
-storage.mount('/assets', assets$1);
+storage$1.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/projects/to-do-panel","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/projects/to-do-panel/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/projects/to-do-panel/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/projects/to-do-panel/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:/projects/to-do-panel/.data/kv"}));
+storage$1.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Projects/task-manager-panel","watchOptions":{"ignored":[null]}}));
+storage$1.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Projects/task-manager-panel/server","watchOptions":{"ignored":[null]}}));
+storage$1.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Projects/task-manager-panel/.nuxt"}));
+storage$1.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Projects/task-manager-panel/.nuxt/cache"}));
+storage$1.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Projects/task-manager-panel/.data/kv"}));
 
 function useStorage(base = "") {
-  return base ? prefixStorage(storage, base) : storage;
+  return base ? prefixStorage(storage$1, base) : storage$1;
 }
 
 const Hasher = /* @__PURE__ */ (() => {
@@ -648,7 +650,55 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "appName": "Panell To"
+    "appName": "Panell To",
+    "i18n": {
+      "baseUrl": "",
+      "defaultLocale": "en",
+      "rootRedirect": "",
+      "redirectStatusCode": 302,
+      "skipSettingLocaleOnNavigate": false,
+      "locales": [
+        {
+          "code": "en",
+          "language": "en-US"
+        },
+        {
+          "code": "fa",
+          "language": "fa-IR"
+        }
+      ],
+      "detectBrowserLanguage": {
+        "alwaysRedirect": false,
+        "cookieCrossOrigin": false,
+        "cookieDomain": "",
+        "cookieKey": "i18n_redirected",
+        "cookieSecure": false,
+        "fallbackLocale": "",
+        "redirectOn": "root",
+        "useCookie": true
+      },
+      "experimental": {
+        "localeDetector": "",
+        "typedPages": true,
+        "typedOptionsAndMessages": false,
+        "alternateLinkCanonicalQueries": true,
+        "devCache": false,
+        "cacheLifetime": "",
+        "stripMessagesPayload": false,
+        "preload": false,
+        "strictSeo": false,
+        "nitroContextDetection": true,
+        "httpCacheDuration": 10
+      },
+      "domainLocales": {
+        "en": {
+          "domain": ""
+        },
+        "fa": {
+          "domain": ""
+        }
+      }
+    }
   }
 };
 const envOptions = {
@@ -1014,15 +1064,15 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _X__GMJPPdQf8xHGyrmTWO6Gm27NYtUr_Um26acigjqc = (function(nitro) {
+const _eUxEIsA69VUOeI22AAcky5zeovxkuBIEDyC34ghrNdE = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "D:/projects/to-do-panel";
+const rootDir = "C:/Projects/task-manager-panel";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"description","content":"مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#bfa1cf"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"fa","dir":"rtl"},"title":"پنل کارها - Panell To"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"description","content":"مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#bfa1cf"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap"}],"style":[],"script":[],"noscript":[],"title":"پنل کارها - Panell To"};
 
 const appRootTag = "div";
 
@@ -1039,7 +1089,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _j6PG9tLdSjbLPQFGbFw6yHDrAaJUQNPdRk8A3Zs13l8 = (nitroApp) => {
+const _0BkyEYDkx1UHsuay0xObGWgkeiRpEPWAycZIjHuvWFU = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -1108,9 +1158,608 @@ function onConsoleLog(callback) {
   consola$1.wrapConsole();
 }
 
+/*!
+  * shared v11.2.8
+  * (c) 2025 kazuya kawaguchi
+  * Released under the MIT License.
+  */
+const _create = Object.create;
+const create = (obj = null) => _create(obj);
+/* eslint-enable */
+/**
+ * Useful Utilities By Evan you
+ * Modified by kazuya kawaguchi
+ * MIT License
+ * https://github.com/vuejs/vue-next/blob/master/packages/shared/src/index.ts
+ * https://github.com/vuejs/vue-next/blob/master/packages/shared/src/codeframe.ts
+ */
+const isArray = Array.isArray;
+const isFunction = (val) => typeof val === 'function';
+const isString = (val) => typeof val === 'string';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isObject = (val) => val !== null && typeof val === 'object';
+const objectToString = Object.prototype.toString;
+const toTypeString = (value) => objectToString.call(value);
+
+const isNotObjectOrIsArray = (val) => !isObject(val) || isArray(val);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function deepCopy(src, des) {
+    // src and des should both be objects, and none of them can be a array
+    if (isNotObjectOrIsArray(src) || isNotObjectOrIsArray(des)) {
+        throw new Error('Invalid value');
+    }
+    const stack = [{ src, des }];
+    while (stack.length) {
+        const { src, des } = stack.pop();
+        // using `Object.keys` which skips prototype properties
+        Object.keys(src).forEach(key => {
+            if (key === '__proto__') {
+                return;
+            }
+            // if src[key] is an object/array, set des[key]
+            // to empty object/array to prevent setting by reference
+            if (isObject(src[key]) && !isObject(des[key])) {
+                des[key] = Array.isArray(src[key]) ? [] : create();
+            }
+            if (isNotObjectOrIsArray(des[key]) || isNotObjectOrIsArray(src[key])) {
+                // replace with src[key] when:
+                // src[key] or des[key] is not an object, or
+                // src[key] or des[key] is an array
+                des[key] = src[key];
+            }
+            else {
+                // src[key] and des[key] are both objects, merge them
+                stack.push({ src: src[key], des: des[key] });
+            }
+        });
+    }
+}
+
+const __nuxtMock = { runWithContext: async (fn) => await fn() };
+const merger = createDefu((obj, key, value) => {
+  if (key === "messages" || key === "datetimeFormats" || key === "numberFormats") {
+    obj[key] ??= create(null);
+    deepCopy(value, obj[key]);
+    return true;
+  }
+});
+async function loadVueI18nOptions(vueI18nConfigs) {
+  const nuxtApp = __nuxtMock;
+  let vueI18nOptions = { messages: create(null) };
+  for (const configFile of vueI18nConfigs) {
+    const resolver = await configFile().then((x) => x.default);
+    const resolved = isFunction(resolver) ? await nuxtApp.runWithContext(() => resolver()) : resolver;
+    vueI18nOptions = merger(create(null), resolved, vueI18nOptions);
+  }
+  vueI18nOptions.fallbackLocale ??= false;
+  return vueI18nOptions;
+}
+const isModule = (val) => toTypeString(val) === "[object Module]";
+const isResolvedModule = (val) => isModule(val) || true;
+async function getLocaleMessages(locale, loader) {
+  const nuxtApp = __nuxtMock;
+  try {
+    const getter = await nuxtApp.runWithContext(loader.load).then((x) => isResolvedModule(x) ? x.default : x);
+    return isFunction(getter) ? await nuxtApp.runWithContext(() => getter(locale)) : getter;
+  } catch (e) {
+    throw new Error(`Failed loading locale (${locale}): ` + e.message);
+  }
+}
+async function getLocaleMessagesMerged(locale, loaders = []) {
+  const nuxtApp = __nuxtMock;
+  const messages = await Promise.all(
+    loaders.map((loader) => nuxtApp.runWithContext(() => getLocaleMessages(locale, loader)))
+  );
+  const merged = {};
+  for (const message of messages) {
+    deepCopy(message, merged);
+  }
+  return merged;
+}
+
+// @ts-nocheck
+const localeCodes =  [
+  "en",
+  "fa"
+];
+const localeLoaders = {
+  en: [
+    {
+      key: "locale_en_46json_6dbcb66e",
+      load: () => Promise.resolve().then(function () { return en$1; }),
+      cache: true
+    }
+  ],
+  fa: [
+    {
+      key: "locale_fa_46json_e53c5ff8",
+      load: () => Promise.resolve().then(function () { return fa$1; }),
+      cache: true
+    }
+  ]
+};
+const vueI18nConfigs = [];
+const normalizedLocales = [
+  {
+    code: "en",
+    language: "en-US"
+  },
+  {
+    code: "fa",
+    language: "fa-IR"
+  }
+];
+
+const setupVueI18nOptions = async (defaultLocale) => {
+  const options = await loadVueI18nOptions(vueI18nConfigs);
+  options.locale = defaultLocale || options.locale || "en-US";
+  options.defaultLocale = defaultLocale;
+  options.fallbackLocale ??= false;
+  options.messages ??= {};
+  for (const locale of localeCodes) {
+    options.messages[locale] ??= {};
+  }
+  return options;
+};
+
+function defineNitroPlugin(def) {
+  return def;
+}
+
+function defineRenderHandler(render) {
+  const runtimeConfig = useRuntimeConfig();
+  return eventHandler(async (event) => {
+    const nitroApp = useNitroApp();
+    const ctx = { event, render, response: void 0 };
+    await nitroApp.hooks.callHook("render:before", ctx);
+    if (!ctx.response) {
+      if (event.path === `${runtimeConfig.app.baseURL}favicon.ico`) {
+        setResponseHeader(event, "Content-Type", "image/x-icon");
+        return send(
+          event,
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        );
+      }
+      ctx.response = await ctx.render(event);
+      if (!ctx.response) {
+        const _currentStatus = getResponseStatus(event);
+        setResponseStatus(event, _currentStatus === 200 ? 500 : _currentStatus);
+        return send(
+          event,
+          "No response returned from render handler: " + event.path
+        );
+      }
+    }
+    await nitroApp.hooks.callHook("render:response", ctx.response, ctx);
+    if (ctx.response.headers) {
+      setResponseHeaders(event, ctx.response.headers);
+    }
+    if (ctx.response.statusCode || ctx.response.statusMessage) {
+      setResponseStatus(
+        event,
+        ctx.response.statusCode,
+        ctx.response.statusMessage
+      );
+    }
+    return ctx.response.body;
+  });
+}
+
+const scheduledTasks = false;
+
+const tasks = {
+  
+};
+
+const __runningTasks__ = {};
+async function runTask(name, {
+  payload = {},
+  context = {}
+} = {}) {
+  if (__runningTasks__[name]) {
+    return __runningTasks__[name];
+  }
+  if (!(name in tasks)) {
+    throw createError({
+      message: `Task \`${name}\` is not available!`,
+      statusCode: 404
+    });
+  }
+  if (!tasks[name].resolve) {
+    throw createError({
+      message: `Task \`${name}\` is not implemented!`,
+      statusCode: 501
+    });
+  }
+  const handler = await tasks[name].resolve();
+  const taskEvent = { name, payload, context };
+  __runningTasks__[name] = handler.run(taskEvent);
+  try {
+    const res = await __runningTasks__[name];
+    return res;
+  } finally {
+    delete __runningTasks__[name];
+  }
+}
+
+function buildAssetsDir() {
+  return useRuntimeConfig().app.buildAssetsDir;
+}
+function buildAssetsURL(...path) {
+  return joinRelativeURL(publicAssetsURL(), buildAssetsDir(), ...path);
+}
+function publicAssetsURL(...path) {
+  const app = useRuntimeConfig().app;
+  const publicBase = app.cdnURL || app.baseURL;
+  return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
+}
+
+function parseAcceptLanguage(value) {
+  return value.split(",").map((tag) => tag.split(";")[0]).filter(
+    (tag) => !(tag === "*" || tag === "")
+  );
+}
+function createPathIndexLanguageParser(index = 0) {
+  return (path) => {
+    const rawPath = typeof path === "string" ? path : path.pathname;
+    const normalizedPath = rawPath.split("?")[0];
+    const parts = normalizedPath.split("/");
+    if (parts[0] === "") {
+      parts.shift();
+    }
+    return parts.length > index ? parts[index] || "" : "";
+  };
+}
+
+function useRuntimeI18n(nuxtApp, event) {
+  {
+    return useRuntimeConfig(event).public.i18n;
+  }
+}
+function useI18nDetection(nuxtApp) {
+  const detectBrowserLanguage = useRuntimeI18n().detectBrowserLanguage;
+  const detect = detectBrowserLanguage || {};
+  return {
+    ...detect,
+    enabled: !!detectBrowserLanguage,
+    cookieKey: detect.cookieKey || "i18n_redirected"
+  };
+}
+function resolveRootRedirect(config) {
+  if (!config) {
+    return void 0;
+  }
+  return {
+    path: "/" + (isString(config) ? config : config.path).replace(/^\//, ""),
+    code: !isString(config) && config.statusCode || 302
+  };
+}
+function toArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
+
+function createLocaleConfigs(fallbackLocale) {
+  const localeConfigs = {};
+  for (const locale of localeCodes) {
+    const fallbacks = getFallbackLocaleCodes(fallbackLocale, [locale]);
+    const cacheable = isLocaleWithFallbacksCacheable(locale, fallbacks);
+    localeConfigs[locale] = { fallbacks, cacheable };
+  }
+  return localeConfigs;
+}
+function getFallbackLocaleCodes(fallback, locales) {
+  if (fallback === false) {
+    return [];
+  }
+  if (isArray(fallback)) {
+    return fallback;
+  }
+  let fallbackLocales = [];
+  if (isString(fallback)) {
+    if (locales.every((locale) => locale !== fallback)) {
+      fallbackLocales.push(fallback);
+    }
+    return fallbackLocales;
+  }
+  const targets = [...locales, "default"];
+  for (const locale of targets) {
+    if (locale in fallback == false) {
+      continue;
+    }
+    fallbackLocales = [...fallbackLocales, ...fallback[locale].filter(Boolean)];
+  }
+  return fallbackLocales;
+}
+function isLocaleCacheable(locale) {
+  return localeLoaders[locale] != null && localeLoaders[locale].every((loader) => loader.cache !== false);
+}
+function isLocaleWithFallbacksCacheable(locale, fallbackLocales) {
+  return isLocaleCacheable(locale) && fallbackLocales.every((fallbackLocale) => isLocaleCacheable(fallbackLocale));
+}
+function getDefaultLocaleForDomain(host) {
+  return normalizedLocales.find((l) => !!l.defaultForDomains?.includes(host))?.code;
+}
+const isSupportedLocale = (locale) => localeCodes.includes(locale || "");
+
+function useI18nContext(event) {
+  if (event.context.nuxtI18n == null) {
+    throw new Error("Nuxt I18n server context has not been set up yet.");
+  }
+  return event.context.nuxtI18n;
+}
+function tryUseI18nContext(event) {
+  return event.context.nuxtI18n;
+}
+const getHost = (event) => getRequestURL(event, { xForwardedHost: true }).host;
+async function initializeI18nContext(event) {
+  const runtimeI18n = useRuntimeI18n(void 0, event);
+  const defaultLocale = runtimeI18n.defaultLocale || "";
+  const options = await setupVueI18nOptions(getDefaultLocaleForDomain(getHost(event)) || defaultLocale);
+  const localeConfigs = createLocaleConfigs(options.fallbackLocale);
+  const ctx = createI18nContext();
+  ctx.vueI18nOptions = options;
+  ctx.localeConfigs = localeConfigs;
+  event.context.nuxtI18n = ctx;
+  return ctx;
+}
+function createI18nContext() {
+  return {
+    messages: {},
+    slp: {},
+    localeConfigs: {},
+    trackMap: {},
+    vueI18nOptions: void 0,
+    trackKey(key, locale) {
+      this.trackMap[locale] ??= /* @__PURE__ */ new Set();
+      this.trackMap[locale].add(key);
+    }
+  };
+}
+
+function matchBrowserLocale(locales, browserLocales) {
+  const matchedLocales = [];
+  for (const [index, browserCode] of browserLocales.entries()) {
+    const matchedLocale = locales.find((l) => l.language?.toLowerCase() === browserCode.toLowerCase());
+    if (matchedLocale) {
+      matchedLocales.push({ code: matchedLocale.code, score: 1 - index / browserLocales.length });
+      break;
+    }
+  }
+  for (const [index, browserCode] of browserLocales.entries()) {
+    const languageCode = browserCode.split("-")[0].toLowerCase();
+    const matchedLocale = locales.find((l) => l.language?.split("-")[0].toLowerCase() === languageCode);
+    if (matchedLocale) {
+      matchedLocales.push({ code: matchedLocale.code, score: 0.999 - index / browserLocales.length });
+      break;
+    }
+  }
+  return matchedLocales;
+}
+function compareBrowserLocale(a, b) {
+  if (a.score === b.score) {
+    return b.code.length - a.code.length;
+  }
+  return b.score - a.score;
+}
+function findBrowserLocale(locales, browserLocales) {
+  const matchedLocales = matchBrowserLocale(
+    locales.map((l) => ({ code: l.code, language: l.language || l.code })),
+    browserLocales
+  );
+  return matchedLocales.sort(compareBrowserLocale).at(0)?.code ?? "";
+}
+
+const separator = "___";
+const pathLanguageParser = createPathIndexLanguageParser(0);
+const getLocaleFromRoutePath = (path) => pathLanguageParser(path);
+const getLocaleFromRouteName = (name) => name.split(separator).at(1) ?? "";
+function normalizeInput(input) {
+  return typeof input !== "object" ? String(input) : String(input?.name || input?.path || "");
+}
+function getLocaleFromRoute(route) {
+  const input = normalizeInput(route);
+  return input[0] === "/" ? getLocaleFromRoutePath(input) : getLocaleFromRouteName(input);
+}
+
+function matchDomainLocale(locales, host, pathLocale) {
+  const normalizeDomain = (domain = "") => domain.replace(/https?:\/\//, "");
+  const matches = locales.filter(
+    (locale) => normalizeDomain(locale.domain) === host || toArray(locale.domains).includes(host)
+  );
+  if (matches.length <= 1) {
+    return matches[0]?.code;
+  }
+  return (
+    // match by current path locale
+    matches.find((l) => l.code === pathLocale)?.code || matches.find((l) => l.defaultForDomains?.includes(host) ?? l.domainDefault)?.code
+  );
+}
+
+const getCookieLocale = (event, cookieName) => (getCookie(event, cookieName)) || void 0;
+const getRouteLocale = (event, route) => getLocaleFromRoute(route);
+const getHeaderLocale = (event) => findBrowserLocale(normalizedLocales, parseAcceptLanguage(getRequestHeader(event, "accept-language") || ""));
+const getHostLocale = (event, path, domainLocales) => {
+  const host = getRequestURL(event, { xForwardedHost: true }).host;
+  const locales = normalizedLocales.map((l) => ({
+    ...l,
+    domain: domainLocales[l.code]?.domain ?? l.domain
+  }));
+  return matchDomainLocale(locales, host, getLocaleFromRoutePath(path));
+};
+const useDetectors = (event, config, nuxtApp) => {
+  if (!event) {
+    throw new Error("H3Event is required for server-side locale detection");
+  }
+  const runtimeI18n = useRuntimeI18n();
+  return {
+    cookie: () => getCookieLocale(event, config.cookieKey),
+    header: () => getHeaderLocale(event) ,
+    navigator: () => void 0,
+    host: (path) => getHostLocale(event, path, runtimeI18n.domainLocales),
+    route: (path) => getRouteLocale(event, path)
+  };
+};
+
+// Generated by @nuxtjs/i18n
+const pathToI18nConfig = {};
+const i18nPathToPath = {};
+
+const matcher = createRouterMatcher([], {});
+for (const path of Object.keys(i18nPathToPath)) {
+  matcher.addRoute({ path, component: () => "", meta: {} });
+}
+const getI18nPathToI18nPath = (path, locale) => {
+  if (!path || !locale) {
+    return;
+  }
+  const plainPath = i18nPathToPath[path];
+  const i18nConfig = pathToI18nConfig[plainPath];
+  if (i18nConfig && i18nConfig[locale]) {
+    return i18nConfig[locale] === true ? plainPath : i18nConfig[locale];
+  }
+};
+function isExistingNuxtRoute(path) {
+  if (path === "") {
+    return;
+  }
+  if (path.endsWith("/__nuxt_error")) {
+    return;
+  }
+  const resolvedMatch = matcher.resolve({ path }, { path: "/", name: "", matched: [], params: {}, meta: {} });
+  return resolvedMatch.matched.length > 0 ? resolvedMatch : void 0;
+}
+function matchLocalized(path, locale, defaultLocale) {
+  if (path === "") {
+    return;
+  }
+  const parsed = parsePath(path);
+  const resolvedMatch = matcher.resolve(
+    { path: parsed.pathname || "/" },
+    { path: "/", name: "", matched: [], params: {}, meta: {} }
+  );
+  if (resolvedMatch.matched.length > 0) {
+    const alternate = getI18nPathToI18nPath(resolvedMatch.matched[0].path, locale);
+    const match = matcher.resolve(
+      { params: resolvedMatch.params },
+      { path: alternate || "/", name: "", matched: [], params: {}, meta: {} }
+    );
+    return withLeadingSlash(joinURL$1("", match.path));
+  }
+}
+
+function* detect(detectors, detection, path) {
+  if (detection.enabled) {
+    yield { locale: detectors.cookie(), source: "cookie" };
+    yield { locale: detectors.header(), source: "header" };
+  }
+  yield { locale: detection.fallbackLocale, source: "fallback" };
+}
+const _7IXwHFrukKoHmX7vsXgOyBZ3ru_18nEyfN7uwLhch58 = defineNitroPlugin(async (nitro) => {
+  const runtimeI18n = useRuntimeI18n();
+  const rootRedirect = resolveRootRedirect(runtimeI18n.rootRedirect);
+  runtimeI18n.defaultLocale || "";
+  try {
+    const cacheStorage = useStorage("cache");
+    const cachedKeys = await cacheStorage.getKeys("nitro:handlers:i18n");
+    await Promise.all(cachedKeys.map((key) => cacheStorage.removeItem(key)));
+  } catch {
+  }
+  const detection = useI18nDetection();
+  const cookieOptions = {
+    path: "/",
+    domain: detection.cookieDomain || void 0,
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+    secure: detection.cookieSecure
+  };
+  const createBaseUrlGetter = () => {
+    isFunction(runtimeI18n.baseUrl) ? "" : runtimeI18n.baseUrl || "";
+    if (isFunction(runtimeI18n.baseUrl)) {
+      console.warn("[nuxt-i18n] Configuring baseUrl as a function is deprecated and will be removed in v11.");
+      return () => "";
+    }
+    return (event, defaultLocale) => {
+      return "";
+    };
+  };
+  function resolveRedirectPath(event, path, pathLocale, defaultLocale, detector) {
+    let locale = "";
+    for (const detected of detect(detector, detection, event.path)) {
+      if (detected.locale && isSupportedLocale(detected.locale)) {
+        locale = detected.locale;
+        break;
+      }
+    }
+    locale ||= defaultLocale;
+    function getLocalizedMatch(locale2) {
+      const res = matchLocalized(path || "/", locale2);
+      if (res && res !== event.path) {
+        return res;
+      }
+    }
+    let resolvedPath = void 0;
+    let redirectCode = 302;
+    const requestURL = getRequestURL(event);
+    if (rootRedirect && requestURL.pathname === "/") {
+      locale = detection.enabled && locale || defaultLocale;
+      resolvedPath = isSupportedLocale(detector.route(rootRedirect.path)) && rootRedirect.path || matchLocalized(rootRedirect.path, locale);
+      redirectCode = rootRedirect.code;
+    } else if (runtimeI18n.redirectStatusCode) {
+      redirectCode = runtimeI18n.redirectStatusCode;
+    }
+    switch (detection.redirectOn) {
+      case "root":
+        if (requestURL.pathname !== "/") {
+          break;
+        }
+      // fallthrough (root has no prefix)
+      case "no prefix":
+        if (pathLocale) {
+          break;
+        }
+      // fallthrough to resolve
+      case "all":
+        resolvedPath ??= getLocalizedMatch(locale);
+        break;
+    }
+    if (requestURL.pathname === "/" && "no_prefix" === "prefix") ;
+    return { path: resolvedPath, code: redirectCode, locale };
+  }
+  const baseUrlGetter = createBaseUrlGetter();
+  nitro.hooks.hook("request", async (event) => {
+    await initializeI18nContext(event);
+  });
+  nitro.hooks.hook("render:before", async ({ event }) => {
+    const ctx = useI18nContext(event);
+    const url = getRequestURL(event);
+    const detector = useDetectors(event, detection);
+    const localeSegment = detector.route(event.path);
+    const pathLocale = isSupportedLocale(localeSegment) && localeSegment || void 0;
+    const path = (pathLocale && url.pathname.slice(pathLocale.length + 1)) ?? url.pathname;
+    if (!url.pathname.includes("/_i18n/e0eM7tYK") && !isExistingNuxtRoute(path)) {
+      return;
+    }
+    const resolved = resolveRedirectPath(event, path, pathLocale, ctx.vueI18nOptions.defaultLocale, detector);
+    if (resolved.path && resolved.path !== url.pathname) {
+      ctx.detectLocale = resolved.locale;
+      detection.useCookie && setCookie(event, detection.cookieKey, resolved.locale, cookieOptions);
+      await sendRedirect(
+        event,
+        joinURL$1(baseUrlGetter(event, ctx.vueI18nOptions.defaultLocale), resolved.path + url.search),
+        resolved.code
+      );
+      return;
+    }
+  });
+  nitro.hooks.hook("render:html", (htmlContext, { event }) => {
+    tryUseI18nContext(event);
+  });
+});
+
 const plugins = [
-  _X__GMJPPdQf8xHGyrmTWO6Gm27NYtUr_Um26acigjqc,
-_j6PG9tLdSjbLPQFGbFw6yHDrAaJUQNPdRk8A3Zs13l8
+  _eUxEIsA69VUOeI22AAcky5zeovxkuBIEDyC34ghrNdE,
+_0BkyEYDkx1UHsuay0xObGWgkeiRpEPWAycZIjHuvWFU,
+_7IXwHFrukKoHmX7vsXgOyBZ3ru_18nEyfN7uwLhch58
 ];
 
 const assets = {};
@@ -1138,12 +1787,12 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _WVt19u = eventHandler((event) => {
+const _8tRNm3 = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
   let id = decodePath(
-    withLeadingSlash(withoutTrailingSlash(parseURL(event.path).pathname))
+    withLeadingSlash$1(withoutTrailingSlash(parseURL(event.path).pathname))
   );
   let asset;
   const encodingHeader = String(
@@ -1202,6 +1851,123 @@ const _WVt19u = eventHandler((event) => {
   return readAsset(id);
 });
 
+const storage = prefixStorage(useStorage(), "i18n");
+function cachedFunctionI18n(fn, opts) {
+  opts = { maxAge: 1, ...opts };
+  const pending = {};
+  async function get(key, resolver) {
+    const isPending = pending[key];
+    if (!isPending) {
+      pending[key] = Promise.resolve(resolver());
+    }
+    try {
+      return await pending[key];
+    } finally {
+      delete pending[key];
+    }
+  }
+  return async (...args) => {
+    const key = [opts.name, opts.getKey(...args)].join(":").replace(/:\/$/, ":index");
+    const maxAge = opts.maxAge ?? 1;
+    const isCacheable = !opts.shouldBypassCache(...args) && maxAge >= 0;
+    const cache = isCacheable && await storage.getItemRaw(key);
+    if (!cache || cache.ttl < Date.now()) {
+      pending[key] = Promise.resolve(fn(...args));
+      const value = await get(key, () => fn(...args));
+      if (isCacheable) {
+        await storage.setItemRaw(key, { ttl: Date.now() + maxAge * 1e3, value, mtime: Date.now() });
+      }
+      return value;
+    }
+    return cache.value;
+  };
+}
+
+const _getMessages = async (locale) => {
+  return { [locale]: await getLocaleMessagesMerged(locale, localeLoaders[locale]) };
+};
+cachedFunctionI18n(_getMessages, {
+  name: "messages",
+  maxAge: -1 ,
+  getKey: (locale) => locale,
+  shouldBypassCache: (locale) => !isLocaleCacheable(locale)
+});
+const getMessages = _getMessages ;
+const _getMergedMessages = async (locale, fallbackLocales) => {
+  const merged = {};
+  try {
+    if (fallbackLocales.length > 0) {
+      const messages = await Promise.all(fallbackLocales.map(getMessages));
+      for (const message2 of messages) {
+        deepCopy(message2, merged);
+      }
+    }
+    const message = await getMessages(locale);
+    deepCopy(message, merged);
+    return merged;
+  } catch (e) {
+    throw new Error("Failed to merge messages: " + e.message);
+  }
+};
+const getMergedMessages = cachedFunctionI18n(_getMergedMessages, {
+  name: "merged-single",
+  maxAge: -1 ,
+  getKey: (locale, fallbackLocales) => `${locale}-[${[...new Set(fallbackLocales)].sort().join("-")}]`,
+  shouldBypassCache: (locale, fallbackLocales) => !isLocaleWithFallbacksCacheable(locale, fallbackLocales)
+});
+const _getAllMergedMessages = async (locales) => {
+  const merged = {};
+  try {
+    const messages = await Promise.all(locales.map(getMessages));
+    for (const message of messages) {
+      deepCopy(message, merged);
+    }
+    return merged;
+  } catch (e) {
+    throw new Error("Failed to merge messages: " + e.message);
+  }
+};
+cachedFunctionI18n(_getAllMergedMessages, {
+  name: "merged-all",
+  maxAge: -1 ,
+  getKey: (locales) => locales.join("-"),
+  shouldBypassCache: (locales) => !locales.every((locale) => isLocaleCacheable(locale))
+});
+
+const _messagesHandler = defineEventHandler(async (event) => {
+  const locale = getRouterParam(event, "locale");
+  if (!locale) {
+    throw createError({ status: 400, message: "Locale not specified." });
+  }
+  const ctx = useI18nContext(event);
+  if (ctx.localeConfigs && locale in ctx.localeConfigs === false) {
+    throw createError({ status: 404, message: `Locale '${locale}' not found.` });
+  }
+  const messages = await getMergedMessages(locale, ctx.localeConfigs?.[locale]?.fallbacks ?? []);
+  deepCopy(messages, ctx.messages);
+  return ctx.messages;
+});
+const _cachedMessageLoader = defineCachedFunction(_messagesHandler, {
+  name: "i18n:messages-internal",
+  maxAge: -1 ,
+  getKey: (event) => [getRouterParam(event, "locale") ?? "null", getRouterParam(event, "hash") ?? "null"].join("-"),
+  async shouldBypassCache(event) {
+    const locale = getRouterParam(event, "locale");
+    if (locale == null) {
+      return false;
+    }
+    const ctx = tryUseI18nContext(event) || await initializeI18nContext(event);
+    return !ctx.localeConfigs?.[locale]?.cacheable;
+  }
+});
+defineCachedEventHandler(_cachedMessageLoader, {
+  name: "i18n:messages",
+  maxAge: -1 ,
+  swr: false,
+  getKey: (event) => [getRouterParam(event, "locale") ?? "null", getRouterParam(event, "hash") ?? "null"].join("-")
+});
+const _7JxG5A = _messagesHandler ;
+
 const VueResolver = (_, value) => {
   return isRef(value) ? toValue(value) : value;
 };
@@ -1259,22 +2025,10 @@ function setSSRError(ssrContext, error) {
   ssrContext.url = error.url;
 }
 
-function buildAssetsDir() {
-  return useRuntimeConfig().app.buildAssetsDir;
-}
-function buildAssetsURL(...path) {
-  return joinRelativeURL(publicAssetsURL(), buildAssetsDir(), ...path);
-}
-function publicAssetsURL(...path) {
-  const app = useRuntimeConfig().app;
-  const publicBase = app.cdnURL || app.baseURL;
-  return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
-}
-
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
-const getServerEntry = () => import('file://D:/projects/to-do-panel/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
-const getClientManifest = () => import('file://D:/projects/to-do-panel/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file://C:/Projects/task-manager-panel/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file://C:/Projects/task-manager-panel/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();
   if (!manifest) {
@@ -1520,13 +2274,14 @@ async function getIslandContext(event) {
   return ctx;
 }
 
-const _lazy_CN0exw = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_G_hz7b = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '', handler: _WVt19u, lazy: false, middleware: true, method: undefined },
-  { route: '/__nuxt_error', handler: _lazy_CN0exw, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _8tRNm3, lazy: false, middleware: true, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_G_hz7b, lazy: true, middleware: false, method: undefined },
+  { route: '/_i18n/:hash/:locale/messages.json', handler: _7JxG5A, lazy: false, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_CN0exw, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_G_hz7b, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -1670,82 +2425,6 @@ function useNitroApp() {
 }
 runNitroPlugins(nitroApp$1);
 
-function defineRenderHandler(render) {
-  const runtimeConfig = useRuntimeConfig();
-  return eventHandler(async (event) => {
-    const nitroApp = useNitroApp();
-    const ctx = { event, render, response: void 0 };
-    await nitroApp.hooks.callHook("render:before", ctx);
-    if (!ctx.response) {
-      if (event.path === `${runtimeConfig.app.baseURL}favicon.ico`) {
-        setResponseHeader(event, "Content-Type", "image/x-icon");
-        return send(
-          event,
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-        );
-      }
-      ctx.response = await ctx.render(event);
-      if (!ctx.response) {
-        const _currentStatus = getResponseStatus(event);
-        setResponseStatus(event, _currentStatus === 200 ? 500 : _currentStatus);
-        return send(
-          event,
-          "No response returned from render handler: " + event.path
-        );
-      }
-    }
-    await nitroApp.hooks.callHook("render:response", ctx.response, ctx);
-    if (ctx.response.headers) {
-      setResponseHeaders(event, ctx.response.headers);
-    }
-    if (ctx.response.statusCode || ctx.response.statusMessage) {
-      setResponseStatus(
-        event,
-        ctx.response.statusCode,
-        ctx.response.statusMessage
-      );
-    }
-    return ctx.response.body;
-  });
-}
-
-const scheduledTasks = false;
-
-const tasks = {
-  
-};
-
-const __runningTasks__ = {};
-async function runTask(name, {
-  payload = {},
-  context = {}
-} = {}) {
-  if (__runningTasks__[name]) {
-    return __runningTasks__[name];
-  }
-  if (!(name in tasks)) {
-    throw createError({
-      message: `Task \`${name}\` is not available!`,
-      statusCode: 404
-    });
-  }
-  if (!tasks[name].resolve) {
-    throw createError({
-      message: `Task \`${name}\` is not implemented!`,
-      statusCode: 501
-    });
-  }
-  const handler = await tasks[name].resolve();
-  const taskEvent = { name, payload, context };
-  __runningTasks__[name] = handler.run(taskEvent);
-  try {
-    const res = await __runningTasks__[name];
-    return res;
-  } finally {
-    delete __runningTasks__[name];
-  }
-}
-
 if (!globalThis.crypto) {
   globalThis.crypto = nodeCrypto;
 }
@@ -1841,6 +2520,288 @@ const template$1 = (messages) => {
 const errorDev = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   template: template$1
+}, Symbol.toStringTag, { value: 'Module' }));
+
+var Welcome$1 = "Welcome";
+var Login$1 = "Login";
+var Logout$1 = "Logout";
+var Home$1 = "home";
+var Tasks$1 = "Tasks";
+var Task$1 = "Task";
+var Done$1 = "Done";
+var Title$1 = "Title";
+var Description$1 = "Description";
+var Status$1 = "Status";
+var Year$1 = "Year";
+var Month$1 = "Month";
+var Day$1 = "Day";
+var Confirm$1 = "Confirm";
+var Save$1 = "Save";
+var Cancel$1 = "Cancel";
+var Delete$1 = "Delete";
+var Edit$1 = "Edit";
+var Create$1 = "Create";
+var Update$1 = "Update";
+var More$1 = "More";
+var Less$1 = "Less";
+var Username$1 = "Username";
+var Password$1 = "Password";
+var Admin$1 = "Admin";
+var Guest$1 = "Guest";
+var Search$1 = "Search";
+var All$1 = "All";
+var Yes$1 = "Yes";
+var No$1 = "No";
+var Close$1 = "Close";
+var Open$1 = "Open";
+var Persian$1 = "Persian";
+var English$1 = "English";
+const en = {
+	Welcome: Welcome$1,
+	"Tasks Panel": "Tasks Panel",
+	Login: Login$1,
+	Logout: Logout$1,
+	Home: Home$1,
+	"Home Page": "home page",
+	Tasks: Tasks$1,
+	Task: Task$1,
+	"Task List": "Task List",
+	"Task Details": "Task Details",
+	"Task Creation": "Task Creation",
+	"Task Update": "Task Update",
+	"Task Deletion": "Task Deletion",
+	"To Do": "To Do",
+	"In Progress": "In Progress",
+	Done: Done$1,
+	Title: Title$1,
+	Description: Description$1,
+	Status: Status$1,
+	"Created At": "Created At",
+	"Due Date": "Due Date",
+	"Select Date": "Select Date",
+	Year: Year$1,
+	Month: Month$1,
+	Day: Day$1,
+	Confirm: Confirm$1,
+	"Please select a valid date": "Please select a valid date",
+	Save: Save$1,
+	Cancel: Cancel$1,
+	Delete: Delete$1,
+	Edit: Edit$1,
+	Create: Create$1,
+	Update: Update$1,
+	"Create Task": "Create Task",
+	"Edit Task": "Edit Task",
+	"Delete Task": "Delete Task",
+	More: More$1,
+	Less: Less$1,
+	Username: Username$1,
+	Password: Password$1,
+	"Usernames and password:": "نام‌های کاربری و رمز عبور:",
+	"admin / admin123 (has permision)": "admin / admin123 (has permision to 'To Do' menu)",
+	"guest / guest123 (no permision)": "guest / guest123 (no permision)",
+	Admin: Admin$1,
+	Guest: Guest$1,
+	"Invalid credentials": "Invalid credentials",
+	Search: Search$1,
+	"Date Range": "Date Range",
+	"Sort By": "Sort By",
+	"Sort Order": "Sort Order",
+	All: All$1,
+	"This Week": "This Week",
+	"Oldest First": "Oldest First",
+	"Newest First": "Newest First",
+	"Delete Confirmation": "Delete Confirmation",
+	"Are you sure you want to delete this task?": "Are you sure you want to delete this task?",
+	Yes: Yes$1,
+	No: No$1,
+	Close: Close$1,
+	Open: Open$1,
+	"Task deleted": "Task deleted",
+	"Task updated": "Task updated",
+	"Task created": "Task created",
+	Persian: Persian$1,
+	English: English$1
+};
+
+const en$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  Admin: Admin$1,
+  All: All$1,
+  Cancel: Cancel$1,
+  Close: Close$1,
+  Confirm: Confirm$1,
+  Create: Create$1,
+  Day: Day$1,
+  Delete: Delete$1,
+  Description: Description$1,
+  Done: Done$1,
+  Edit: Edit$1,
+  English: English$1,
+  Guest: Guest$1,
+  Home: Home$1,
+  Less: Less$1,
+  Login: Login$1,
+  Logout: Logout$1,
+  Month: Month$1,
+  More: More$1,
+  No: No$1,
+  Open: Open$1,
+  Password: Password$1,
+  Persian: Persian$1,
+  Save: Save$1,
+  Search: Search$1,
+  Status: Status$1,
+  Task: Task$1,
+  Tasks: Tasks$1,
+  Title: Title$1,
+  Update: Update$1,
+  Username: Username$1,
+  Welcome: Welcome$1,
+  Year: Year$1,
+  Yes: Yes$1,
+  default: en
+}, Symbol.toStringTag, { value: 'Module' }));
+
+var Welcome = "خوش آمدید";
+var Login = "ورود";
+var Logout = "خروج";
+var Home = "خانه";
+var Tasks = "تسک‌ها";
+var Task = "تسک";
+var Done = "انجام شده";
+var Title = "عنوان";
+var Description = "توضیحات";
+var Status = "وضعیت";
+var Year = "سال";
+var Month = "ماه";
+var Day = "روز";
+var Confirm = "تأیید";
+var Save = "ذخیره";
+var Cancel = "انصراف";
+var Delete = "حذف";
+var Edit = "ویرایش";
+var Create = "ایجاد";
+var Update = "ویرایش";
+var More = "بیشتر";
+var Less = "کمتر";
+var Username = "نام کاربری";
+var Password = "رمز عبور";
+var Admin = "ادمین";
+var Guest = "مهمان";
+var Search = "جستجو";
+var All = "همه";
+var Yes = "بله";
+var No = "خیر";
+var Close = "بستن";
+var Open = "باز کردن";
+var Persian = "فارسی";
+var English = "انگلیسی";
+const fa = {
+	Welcome: Welcome,
+	"Tasks Panel": "پنل کارها",
+	Login: Login,
+	Logout: Logout,
+	Home: Home,
+	"Home Page": "صفحه اصلی",
+	Tasks: Tasks,
+	Task: Task,
+	"Task List": "لیست تسک‌ها",
+	"Task Details": "جزئیات تسک",
+	"Task Creation": "ایجاد تسک",
+	"Task Update": "ویرایش تسک",
+	"Task Deletion": "حذف تسک",
+	"To Do": "برای انجام",
+	"In Progress": "در حال انجام",
+	Done: Done,
+	Title: Title,
+	Description: Description,
+	Status: Status,
+	"Created At": "تاریخ ایجاد",
+	"Due Date": "تاریخ سررسید",
+	"Select Date": "انتخاب تاریخ",
+	Year: Year,
+	Month: Month,
+	Day: Day,
+	Confirm: Confirm,
+	"Please select a valid date": "لطفا تاریخ معتبر انتخاب کنید.",
+	Save: Save,
+	Cancel: Cancel,
+	Delete: Delete,
+	Edit: Edit,
+	Create: Create,
+	Update: Update,
+	"Create Task": "ایجاد تسک",
+	"Edit Task": "ویرایش تسک",
+	"Delete Task": "حذف تسک",
+	More: More,
+	Less: Less,
+	Username: Username,
+	Password: Password,
+	"Usernames and password:": "نام‌های کاربری و رمز عبور:",
+	"admin / admin123 (has permision)": "admin / admin123 (دارای پرمیشن منوی 'برای انجام')",
+	"guest / guest123 (no permision)": "guest / guest123 (no permision)",
+	Admin: Admin,
+	Guest: Guest,
+	"Invalid credentials": "اطلاعات ورود نادرست است",
+	Search: Search,
+	"Date Range": "بازه تاریخ",
+	"Sort By": "مرتب‌سازی بر اساس",
+	"Sort Order": "ترتیب",
+	All: All,
+	"This Week": "این هفته",
+	"Oldest First": "قدیمی‌تر اول",
+	"Newest First": "جدیدتر اول",
+	"Delete Confirmation": "تایید حذف",
+	"Are you sure you want to delete this task?": "آیا از حذف این تسک مطمئن هستید؟",
+	Yes: Yes,
+	No: No,
+	Close: Close,
+	Open: Open,
+	"Task deleted": "تسک حذف شد",
+	"Task updated": "تسک ویرایش شد",
+	"Task created": "تسک ایجاد شد",
+	Persian: Persian,
+	English: English
+};
+
+const fa$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  Admin: Admin,
+  All: All,
+  Cancel: Cancel,
+  Close: Close,
+  Confirm: Confirm,
+  Create: Create,
+  Day: Day,
+  Delete: Delete,
+  Description: Description,
+  Done: Done,
+  Edit: Edit,
+  English: English,
+  Guest: Guest,
+  Home: Home,
+  Less: Less,
+  Login: Login,
+  Logout: Logout,
+  Month: Month,
+  More: More,
+  No: No,
+  Open: Open,
+  Password: Password,
+  Persian: Persian,
+  Save: Save,
+  Search: Search,
+  Status: Status,
+  Task: Task,
+  Tasks: Tasks,
+  Title: Title,
+  Update: Update,
+  Username: Username,
+  Welcome: Welcome,
+  Year: Year,
+  Yes: Yes,
+  default: fa
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const template = "";

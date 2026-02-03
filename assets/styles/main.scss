@@ -81,6 +81,35 @@ body, .v-application {
   direction: rtl;
 }
 
+.kanban-row {
+  align-items: stretch;
+}
+.kanban-column {
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
+  height: 100%;
+}
+.kanban-column .v-card-title {
+  font-weight: 600;
+  color: #3d2f47;
+}
+.kanban-column-content {
+  scrollbar-width: thin;
+}
+.kanban-column-content::-webkit-scrollbar {
+  width: 8px;
+}
+.kanban-column-content::-webkit-scrollbar-thumb {
+  background: rgba($app-color, 0.6);
+  border-radius: 8px;
+}
+.kanban-column-content::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.04);
+}
+.column-todo .v-card-title { color: #b8860b; }
+.column-inprogress .v-card-title { color: #0d7ea4; }
+.column-done .v-card-title { color: #43a047; }
+
 .is-weekend {
   background: rgba(255, 193, 7, 0.12) !important;
 }
