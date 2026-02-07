@@ -1072,7 +1072,7 @@ const _eUxEIsA69VUOeI22AAcky5zeovxkuBIEDyC34ghrNdE = (function(nitro) {
 
 const rootDir = "C:/Projects/task-manager-panel";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"description","content":"مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#bfa1cf"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap"}],"style":[],"script":[],"noscript":[],"title":"پنل کارها - Panell To"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"description","content":"مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#bfa1cf"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"}],"style":[],"script":[],"noscript":[],"title":"پنل کارها - Panell To"};
 
 const appRootTag = "div";
 
@@ -1736,7 +1736,7 @@ const _7IXwHFrukKoHmX7vsXgOyBZ3ru_18nEyfN7uwLhch58 = defineNitroPlugin(async (ni
     const localeSegment = detector.route(event.path);
     const pathLocale = isSupportedLocale(localeSegment) && localeSegment || void 0;
     const path = (pathLocale && url.pathname.slice(pathLocale.length + 1)) ?? url.pathname;
-    if (!url.pathname.includes("/_i18n/e0eM7tYK") && !isExistingNuxtRoute(path)) {
+    if (!url.pathname.includes("/_i18n/OtXk4Ws3") && !isExistingNuxtRoute(path)) {
       return;
     }
     const resolved = resolveRedirectPath(event, path, pathLocale, ctx.vueI18nOptions.defaultLocale, detector);
@@ -1762,7 +1762,22 @@ _0BkyEYDkx1UHsuay0xObGWgkeiRpEPWAycZIjHuvWFU,
 _7IXwHFrukKoHmX7vsXgOyBZ3ru_18nEyfN7uwLhch58
 ];
 
-const assets = {};
+const assets = {
+  "/index.mjs": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"19569-zqHRFR1fDJHX11f0Ux/epVKRAEU\"",
+    "mtime": "2026-02-07T14:49:28.545Z",
+    "size": 103785,
+    "path": "index.mjs"
+  },
+  "/index.mjs.map": {
+    "type": "application/json",
+    "etag": "\"5b6c2-RvdmhkLQduko1sXJv9xRoWQS+hs\"",
+    "mtime": "2026-02-07T14:49:28.546Z",
+    "size": 374466,
+    "path": "index.mjs.map"
+  }
+};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2522,7 +2537,6 @@ const errorDev = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   template: template$1
 }, Symbol.toStringTag, { value: 'Module' }));
 
-var Welcome$1 = "Welcome";
 var Login$1 = "Login";
 var Logout$1 = "Logout";
 var Home$1 = "home";
@@ -2544,10 +2558,10 @@ var Create$1 = "Create";
 var Update$1 = "Update";
 var More$1 = "More";
 var Less$1 = "Less";
+var Email$1 = "Email";
 var Username$1 = "Username";
 var Password$1 = "Password";
 var Admin$1 = "Admin";
-var Guest$1 = "Guest";
 var Search$1 = "Search";
 var All$1 = "All";
 var Yes$1 = "Yes";
@@ -2557,7 +2571,7 @@ var Open$1 = "Open";
 var Persian$1 = "Persian";
 var English$1 = "English";
 const en = {
-	Welcome: Welcome$1,
+	"Welcome Back": "Welcome Back!",
 	"Tasks Panel": "Tasks Panel",
 	Login: Login$1,
 	Logout: Logout$1,
@@ -2595,13 +2609,10 @@ const en = {
 	"Delete Task": "Delete Task",
 	More: More$1,
 	Less: Less$1,
+	Email: Email$1,
 	Username: Username$1,
 	Password: Password$1,
-	"Usernames and password:": "نام‌های کاربری و رمز عبور:",
-	"admin / admin123 (has permision)": "admin / admin123 (has permision to 'To Do' menu)",
-	"guest / guest123 (no permision)": "guest / guest123 (no permision)",
 	Admin: Admin$1,
-	Guest: Guest$1,
 	"Invalid credentials": "Invalid credentials",
 	Search: Search$1,
 	"Date Range": "Date Range",
@@ -2637,8 +2648,8 @@ const en$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   Description: Description$1,
   Done: Done$1,
   Edit: Edit$1,
+  Email: Email$1,
   English: English$1,
-  Guest: Guest$1,
   Home: Home$1,
   Less: Less$1,
   Login: Login$1,
@@ -2657,13 +2668,11 @@ const en$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   Title: Title$1,
   Update: Update$1,
   Username: Username$1,
-  Welcome: Welcome$1,
   Year: Year$1,
   Yes: Yes$1,
   default: en
 }, Symbol.toStringTag, { value: 'Module' }));
 
-var Welcome = "خوش آمدید";
 var Login = "ورود";
 var Logout = "خروج";
 var Home = "خانه";
@@ -2685,10 +2694,10 @@ var Create = "ایجاد";
 var Update = "ویرایش";
 var More = "بیشتر";
 var Less = "کمتر";
+var Email = "ایمیل";
 var Username = "نام کاربری";
 var Password = "رمز عبور";
 var Admin = "ادمین";
-var Guest = "مهمان";
 var Search = "جستجو";
 var All = "همه";
 var Yes = "بله";
@@ -2698,7 +2707,7 @@ var Open = "باز کردن";
 var Persian = "فارسی";
 var English = "انگلیسی";
 const fa = {
-	Welcome: Welcome,
+	"Welcome Back": "خوش آمدید!",
 	"Tasks Panel": "پنل کارها",
 	Login: Login,
 	Logout: Logout,
@@ -2736,13 +2745,10 @@ const fa = {
 	"Delete Task": "حذف تسک",
 	More: More,
 	Less: Less,
+	Email: Email,
 	Username: Username,
 	Password: Password,
-	"Usernames and password:": "نام‌های کاربری و رمز عبور:",
-	"admin / admin123 (has permision)": "admin / admin123 (دارای پرمیشن منوی 'برای انجام')",
-	"guest / guest123 (no permision)": "guest / guest123 (no permision)",
 	Admin: Admin,
-	Guest: Guest,
 	"Invalid credentials": "اطلاعات ورود نادرست است",
 	Search: Search,
 	"Date Range": "بازه تاریخ",
@@ -2778,8 +2784,8 @@ const fa$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   Description: Description,
   Done: Done,
   Edit: Edit,
+  Email: Email,
   English: English,
-  Guest: Guest,
   Home: Home,
   Less: Less,
   Login: Login,
@@ -2798,7 +2804,6 @@ const fa$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   Title: Title,
   Update: Update,
   Username: Username,
-  Welcome: Welcome,
   Year: Year,
   Yes: Yes,
   default: fa

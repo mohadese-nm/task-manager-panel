@@ -31,7 +31,7 @@ function createHead(options = {}) {
   return head;
 }
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"description","content":"مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#bfa1cf"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"fa","dir":"rtl"},"title":"پنل کارها - Panell To"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"description","content":"مدیریت تسک‌ها با Nuxt 3، Vuetify و TypeScript"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#bfa1cf"}],"link":[{"rel":"icon","type":"image/svg+xml","href":"/favicon.svg"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"fa","dir":"rtl"},"title":"پنل کارها - Panell To"};
 
 const appRootTag = "div";
 

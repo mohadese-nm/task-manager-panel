@@ -1,20 +1,68 @@
 $app-color: #bfa1cf;
 
-html, body, #__nuxt, #__layout {
+/* Vuetify built-in overrides (variable-like) */
+.v-field {
+  border-radius: 10px !important;
+}
+.v-field__outline {
+  border-radius: 10px !important;
+  --v-field-border-opacity: 0.22;
+}
+.v-field:hover .v-field__outline {
+  --v-field-border-opacity: 0.38;
+}
+.v-field.v-field--focused .v-field__outline {
+  --v-field-border-opacity: 1;
+}
+
+.v-card-title {
+  font-weight: 600!important;
+  text-align: center;
+  margin-bottom: 24px!important;
+}
+
+html,
+body,
+#__nuxt,
+#__layout {
   height: 100%;
 }
 
-body, .v-application {
-  font-family: 'Vazirmatn', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+body,
+.v-application {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    "Liberation Sans",
+    sans-serif;
 }
 
 .app-bg {
-  background: linear-gradient(135deg, rgba($app-color, 0.15), rgba(255,255,255,0.6));
+  background: linear-gradient(
+    135deg,
+    rgba($app-color, 0.15),
+    rgba(255, 255, 255, 0.6)
+  );
 }
 
 .app-main {
-  background: radial-gradient(1200px 600px at 100% -100%, rgba($app-color, 0.12), transparent),
-              radial-gradient(1000px 500px at -20% 120%, rgba(127, 106, 143, 0.10), transparent);
+  background:
+    radial-gradient(
+      1200px 600px at 100% -100%,
+      rgba($app-color, 0.12),
+      transparent
+    ),
+    radial-gradient(
+      1000px 500px at -20% 120%,
+      rgba(127, 106, 143, 0.1),
+      transparent
+    );
 }
 
 .app-drawer {
@@ -34,11 +82,13 @@ body, .v-application {
 
 .task-card {
   border-radius: 14px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .task-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .status-todo {
@@ -53,7 +103,7 @@ body, .v-application {
 
 .day-card {
   border-radius: 16px !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
   backdrop-filter: blur(4px);
 }
 .day-card .v-card-title {
@@ -71,7 +121,7 @@ body, .v-application {
   border-radius: 8px;
 }
 .day-card .v-card-text::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.04);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .week-scroll {
@@ -86,7 +136,7 @@ body, .v-application {
 }
 .kanban-column {
   border-radius: 16px !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
   height: 100%;
 }
 .kanban-column .v-card-title {
@@ -104,11 +154,17 @@ body, .v-application {
   border-radius: 8px;
 }
 .kanban-column-content::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0.04);
+  background: rgba(0, 0, 0, 0.04);
 }
-.column-todo .v-card-title { color: #b8860b; }
-.column-inprogress .v-card-title { color: #0d7ea4; }
-.column-done .v-card-title { color: #43a047; }
+.column-todo .v-card-title {
+  color: #b8860b;
+}
+.column-inprogress .v-card-title {
+  color: #0d7ea4;
+}
+.column-done .v-card-title {
+  color: #43a047;
+}
 
 .is-weekend {
   background: rgba(255, 193, 7, 0.12) !important;
@@ -118,9 +174,9 @@ body, .v-application {
   width: 100%;
   margin: 0 0 16px 0;
   padding: 16px 30px;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(6px);
 }
 
@@ -128,13 +184,25 @@ body, .v-application {
   --v-field-border-color: #bfa1cf;
   --v-field-hover-border-color: #bfa1cf;
   --v-field-focused-border-color: #bfa1cf;
-  border-radius: 12px !important;
 }
 
-.outlined-primary .v-field__overlay { display: none; }
+.outlined-primary .v-field__overlay {
+  display: none;
+}
 
 /* Utilities */
-.text-none { text-transform: none !important; }
-.v-btn.text-none:hover { filter: brightness(1.03); }
+.text-none {
+  text-transform: none !important;
+}
+.v-btn.text-none:hover {
+  filter: brightness(1.03);
+}
 
-
+.login-card {
+  padding: 32px 24px !important;
+  min-width: 384px;
+  background: #ffffffff;
+  box-shadow:
+    0px 1px 25px #171a1f1c,
+    0px 2px 4px #171a1f17;
+}

@@ -1,8 +1,6 @@
-
 import { createVuetify, type ThemeDefinition } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import { fa, en } from 'vuetify/locale'
-import 'vuetify/styles'
 
 const appTheme: ThemeDefinition = {
   dark: false,
