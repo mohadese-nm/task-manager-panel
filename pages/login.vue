@@ -1,7 +1,7 @@
 <template>
   <VContainer class="d-flex align-center justify-center" style="min-height: 70vh;">
     <VCard max-width="480" rounded="lg" class="login-card">
-      <VCardTitle>{{ $t('Welcome Back') }}</VCardTitle>
+      <VCardTitle class="text-center">{{ $t('Welcome Back') }}</VCardTitle>
       <VCardText>
         <span class="d-block mb-2 font-weight-medium">{{ $t('Email') }}</span>
         <VTextField v-model="email" variant="outlined" density="compact" />

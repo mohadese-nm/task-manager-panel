@@ -1,21 +1,21 @@
 <template>
   <VApp class="app-bg" :dir="dir">
     <VLayout>
-      <VAppBar color="primary" density="comfortable">
-        <VAppBarNavIcon @click="drawer = !drawer" />
+      <VAppBar density="comfortable" class="header-elevation">
+        <VAppBarNavIcon color="primary" @click="drawer = !drawer" />
         <VToolbarTitle>{{ $t('Tasks Panel') }}</VToolbarTitle>
         <VSpacer />
         <client-only>
-          <VMenu v-model="localeMenuOpen" open-on-hover>
+          <VMenu v-model="localeMenuOpen">
             <template #activator="{ props }">
-              <VBtn v-bind="props" variant="tonal" color="secondary" class="mx-1" rounded="lg" icon>
-                <VIcon>mdi-translate</VIcon>
+              <VBtn v-bind="props" variant="outlined" color="secondary" class="mx-1" rounded="lg" prepend-icon="mdi-web" size="small">
+                <span class="text-caption">{{ currentLocaleLabel }}</span>
               </VBtn>
             </template>
             <div :class="{ 'locale-menu-hide': localeMenuHideContent }">
               <VList>
                 <VListItem v-for="loc in availableLocales" :key="loc.code" @click="onLocaleClick(loc.code)"
-                  :active="currentLocale === loc.code">
+                  :active="currentLocale === loc.code" color="primaryDark" active-class="active-nav-item"> 
                   <VListItemTitle>
                     {{ loc.label }}
                   </VListItemTitle>
@@ -23,23 +23,44 @@
               </VList>
             </div>
           </VMenu>
-          <VBtn v-if="!auth.currentUser" color="secondary" variant="tonal" rounded="lg" elevation="0"
-            density="comfortable" prepend-icon="mdi-login" :to="'/login'" class="mx-1 text-none">
-            {{ $t('Login') }}
+
+          <VBtn color="#171a1f" class="mx-1" rounded="xl" icon size="small" @click="toggleTheme">
+            <VIcon v-if="global.name.value === 'darkTheme'" icon="mdi-weather-sunny" color="white" />
+            <VIcon v-else icon="mdi-weather-night" />
           </VBtn>
-          <VBtn v-else color="error" variant="tonal" rounded="lg" elevation="0" size="large" density="comfortable"
-            prepend-icon="mdi-logout" @click="logout" class="mx-1 text-none">
-            {{ $t('Logout') }}
-          </VBtn>
+
+          <VMenu v-model="userMenuOpen">
+            <template #activator="{ props }">
+              <VBtn v-bind="props" color="secondary" class="mx-1" rounded="xl" icon
+                size="small">
+                <VIcon icon="mdi-account-circle" />
+              </VBtn>
+            </template>
+            <div>
+              <VList>
+                <VListItem density="compact" prepend-icon="mdi-account-circle" rounded="lg">
+                  <VListItemTitle>
+                    {{ $t('Profile') }}
+                  </VListItemTitle>
+                </VListItem>
+                <VListItem density="compact" prepend-icon="mdi-logout" rounded="lg" base-color="error"
+                  @click="logout">
+                  <VListItemTitle>
+                    {{ $t('Logout') }}
+                  </VListItemTitle>
+                </VListItem>
+              </VList>
+            </div>
+          </VMenu>
         </client-only>
       </VAppBar>
 
       <VNavigationDrawer v-model="drawer" temporary class="app-drawer" :location="drawerLocation" mobile :dir="dir">
         <VList nav>
-          <VListItem to="/" :title="$t('Home')" prepend-icon="mdi-home" />
+          <VListItem to="/" :title="$t('Dashboard')" prepend-icon="mdi-view-dashboard-outline" active-class="active-nav-item" />
           <client-only>
-            <VListItem v-if="can('menu_in_todos_show')" to="/admin" :title="$t('To Do')"
-              prepend-icon="mdi-checkbox-multiple-marked-outline" />
+            <VListItem to="/admin" :title="$t('To Do')"
+              prepend-icon="mdi-checkbox-multiple-marked-outline" active-class="active-nav-item"/>
           </client-only>
         </VList>
 
@@ -69,22 +90,26 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useLocale } from 'vuetify'
 import { useAuthStore } from '../stores/auth'
-import { usePermission } from '../composables/usePermission'
-
+import { useTheme } from 'vuetify'
 const drawer = ref(false)
 const localeMenuOpen = ref(false)
+const userMenuOpen = ref(false)
 const localeMenuHideContent = ref(false)
 watch(localeMenuOpen, (open) => { if (open) localeMenuHideContent.value = false })
-const { can } = usePermission()
 const auth = useAuthStore()
 const router = useRouter()
 const { locale, setLocale: setI18nLocale } = useI18n()
 const vuetifyLocale = useLocale()
+const { global } = useTheme()
 const currentLocale = locale
+
 const availableLocales: { code: 'en' | 'fa'; label: string }[] = [
   { code: 'fa', label: 'فارسی' },
   { code: 'en', label: 'English' }
 ]
+const currentLocaleLabel = computed(() => {
+  return availableLocales.find(loc => loc.code === currentLocale.value)?.label ?? 'en'
+})
 const isRtl = computed(() => currentLocale.value === 'fa')
 const dir = computed(() => (currentLocale.value === 'fa' ? 'rtl' : 'ltr'))
 const drawerLocation = computed(() => (isRtl.value ? 'right' : 'left'))
@@ -130,6 +155,19 @@ onMounted(() => {
     ctx.loadMessages('fa').catch(() => { })
   }
 })
+
+onMounted(() => {
+  const theme = localStorage.getItem('theme')
+  if (theme) {
+    global.name.value = theme
+  }
+})
+
+function toggleTheme() {
+  global.name.value = global.name.value === 'darkTheme' ? 'lightTheme' : 'darkTheme'
+  localStorage.setItem('theme', global.name.value)
+  console.log(global.name.value)
+}
 
 function logout() { auth.logout(); router.push('/login') }
 </script>

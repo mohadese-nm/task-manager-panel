@@ -28,7 +28,7 @@
       <VCol v-for="col in kanbanColumns" :key="col.status" cols="12" md="4">
         <VCard :class="['kanban-column', col.class]" :title="col.title" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
           <VCardText
-            class="kanban-column-content"
+            class="kanban-column-content pt-2"
             style="max-height: 70vh; overflow: auto;"
             @dragover.prevent="onColumnDragover($event, col.status)"
             @drop="onColumnDrop(col.status)"
@@ -186,7 +186,8 @@ function onSave(payload: { date: Date; task: Omit<Task, 'id' | 'dueDate'>; editi
 }
 
 function visibleTasksForStatus(status: TaskStatus) {
-  let list = tasksByStatus.value[status] || []
+  const byStatus = tasksByStatus.value ?? {}
+  let list = byStatus[status] ?? []
   list = applyFilter(list, search.value, 'all')
   if (dateRangeFilter.value === 'this_week') {
     list = list.filter(t => week.isInThisWeek(t.dueDate))
@@ -211,18 +212,16 @@ onMounted(() => {
   init()
   if (import.meta.client) {
     window.addEventListener('storage', (e) => {
-      if (e.key === 'tasks_days_v1' && e.newValue) {
+      if (e.key === 'tasks_v2' && e.newValue) {
         try {
-          const parsed = JSON.parse(e.newValue) as any[]
-          tasksStore.days = parsed.map(day => ({
-            ...day,
-            date: new Date(day.date),
-            tasks: day.tasks.map((task: any) => ({
-              ...task,
-              dueDate: new Date(task.dueDate),
-              createdAt: task.createdAt ? new Date(task.createdAt) : new Date(task.dueDate)
+          const parsed = JSON.parse(e.newValue)
+          if (Array.isArray(parsed)) {
+            tasksStore.tasks = parsed.map((t: any) => ({
+              ...t,
+              dueDate: new Date(t.dueDate),
+              createdAt: t.createdAt ? new Date(t.createdAt) : new Date(t.dueDate)
             }))
-          }))
+          }
         } catch {}
       }
     })

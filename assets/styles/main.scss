@@ -1,4 +1,6 @@
-$app-color: #bfa1cf;
+$app-color: rgb(var(--v-theme-primary));
+$app-color-light: rgb(var(--v-theme-primaryLight));
+$app-color-medium: rgb(var(--v-theme-primaryMedium));
 
 /* Vuetify built-in overrides (variable-like) */
 .v-field {
@@ -14,10 +16,14 @@ $app-color: #bfa1cf;
 .v-field.v-field--focused .v-field__outline {
   --v-field-border-opacity: 1;
 }
-
+.text-center {
+  text-align: center!important;
+}
 .v-card-title {
   font-weight: 600!important;
-  text-align: center;
+  margin-bottom: 4px!important;
+}
+.v-card-text {
   margin-bottom: 24px!important;
 }
 
@@ -46,7 +52,7 @@ body,
 .app-bg {
   background: linear-gradient(
     135deg,
-    rgba($app-color, 0.15),
+    rgb(var(--v-theme-primary), 0.15),
     rgba(255, 255, 255, 0.6)
   );
 }
@@ -55,7 +61,7 @@ body,
   background:
     radial-gradient(
       1200px 600px at 100% -100%,
-      rgba($app-color, 0.12),
+      rgb(var(--v-theme-primary), 0.12),
       transparent
     ),
     radial-gradient(
@@ -70,8 +76,8 @@ body,
 }
 
 .is-today {
-  background: rgba($app-color, 0.45) !important;
-  outline: 2px dashed rgba($app-color, 0.4);
+  background: rgb(var(--v-theme-primary), 0.45) !important;
+  outline: 2px dashed rgb(var(--v-theme-primary), 0.4);
   outline-offset: -4px;
 }
 
@@ -117,7 +123,7 @@ body,
   width: 8px;
 }
 .day-card .v-card-text::-webkit-scrollbar-thumb {
-  background: rgba($app-color, 0.6);
+  background: rgb(var(--v-theme-primary), 0.6);
   border-radius: 8px;
 }
 .day-card .v-card-text::-webkit-scrollbar-track {
@@ -150,7 +156,7 @@ body,
   width: 8px;
 }
 .kanban-column-content::-webkit-scrollbar-thumb {
-  background: rgba($app-color, 0.6);
+  background: rgb(var(--v-theme-primary), 0.6);
   border-radius: 8px;
 }
 .kanban-column-content::-webkit-scrollbar-track {
@@ -174,7 +180,7 @@ body,
   width: 100%;
   margin: 0 0 16px 0;
   padding: 16px 30px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(var(--v-theme-surface));
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(6px);
@@ -190,6 +196,10 @@ body,
   display: none;
 }
 
+.v-list-item--variant-text .v-list-item__overlay {
+  background: rgb(var(--v-theme-primary)) !important;
+}
+
 /* Utilities */
 .text-none {
   text-transform: none !important;
@@ -201,8 +211,62 @@ body,
 .login-card {
   padding: 32px 24px !important;
   min-width: 384px;
-  background: #ffffffff;
+  background: rgba(var(--v-theme-surface));
   box-shadow:
     0px 1px 25px #171a1f1c,
     0px 2px 4px #171a1f17;
+}
+
+.header-elevation {
+      border-radius: 0px 0px 10px 10px !important;
+      box-shadow: 0px 2px 4px #00000012, 0px 0px 0px #171a1f00 !important;
+}
+
+.v-btn--variant-outlined {
+  border: 1px solid rgb(var(--v-theme-border)) !important;
+  color: rgb(var(--v-theme-secondary)) !important;
+}
+
+.v-toolbar-title {
+  font-weight: 600 !important;
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+.active-nav-item {
+  background-color: rgba(var(--v-theme-primaryLight), 0.7) !important;
+  color: rgb(var(--v-theme-primaryDark)) !important;
+}
+
+
+.dashboard-stat-card--due-today {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--v-theme-yellowLight)),
+    rgb(var(--v-theme-yellow))
+  ) !important;
+  color: rgb(var(--v-theme-yellowDark));
+}
+.dashboard-stat-card--upcoming {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--v-theme-purpleLight)),
+    rgb(var(--v-theme-purple))
+  ) !important;
+  color: rgb(var(--v-theme-purpleDark));
+}
+.dashboard-stat-card--completed {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--v-theme-primaryLight)),
+    rgb(var(--v-theme-primary))
+  ) !important;
+  color: rgb(var(--v-theme-primaryDark));
+}
+.dashboard-stat-card--overdue {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--v-theme-errorLight)),
+    rgb(var(--v-theme-error))
+  ) !important;
+  color: rgb(var(--v-theme-errorDark));
 }
