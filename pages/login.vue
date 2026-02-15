@@ -3,6 +3,10 @@
     <VCard max-width="480" rounded="lg" class="login-card">
       <VCardTitle class="text-center">{{ $t('Welcome Back') }}</VCardTitle>
       <VCardText>
+        <VAlert type="info" variant="tonal" class="mb-4">
+          {{ $t('Username:') }} <b>admin</b>
+          <div class="mt-2">{{ $t('Password:') }} <b>admin123</b></div>
+        </VAlert>
         <span class="d-block mb-2 font-weight-medium">{{ $t('Email') }}</span>
         <VTextField v-model="email" variant="outlined" density="compact" />
         <span class="d-block mb-2 font-weight-medium">{{ $t('Password') }}</span>
