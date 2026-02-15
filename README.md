@@ -1,133 +1,104 @@
-# پنل To-Do
+# Task Manager Panel
 
-پنل مدیریت تسک‌های روزانه با استفاده از Nuxt 3، Vuetify و TypeScript
+A task management panel built with Nuxt 3, Vuetify, and TypeScript. The home page shows a **dashboard** with task stats; the **admin panel** organizes tasks by status in a Kanban-style view.
 
-## ویژگی‌ها
+## Features
 
-### امکانات اصلی
+### Core Capabilities
 
-- ✅ پنل ادمین
-- ✅ مدیریت کامل تسک‌ها (ایجاد، ویرایش، حذف)
-- ✅ جابجایی تسک‌ها با Drag & Drop
-- ✅ تغییر وضعیت تسک‌ها (انجام شده، انجام نشده، در حال انجام)
-- ✅ نمایش 7 روز هفته با هایلایت امروز
-- ✅ Infinite Scroll برای هر روز
-- ✅ جستجو و فیلتر
-- ✅ Real-time Sync بین تب‌ها
-- ✅ نوتیفیکیشن صوتی
-- ✅ کنترل دسترسی مبتنی بر پرمیشن (Type-safe)
-- ✅ تقویم جلالی
+- **Dashboard** — “Today at a Glance” stat cards: due today, upcoming this week, completed today, overdue (theme-colored, gradient backgrounds)
+- **Admin panel** — Full task management (create, edit, delete) in a status-based Kanban (Todo, In progress, Done)
+- Drag & drop to move tasks between status columns
+- Search, date range, sort, and filters
+- Real-time sync across browser tabs
+- Sound notifications (create / complete task)
+- **Theme change** — Switch between light and dark mode (Vuetify; custom colors)
+- **Language change** — English and Persian (fa), with RTL support
+- Type-safe permission-based access control
+- Jalali (Persian) calendar support
 
-## نصب و راه‌اندازی
+## Installation & Setup
 
-### IDE و TypeScript در فایل‌های Vue
+### IDE and TypeScript in Vue Files
 
-اگر در قالب فایل‌های `.vue` خطای «Cannot find name» می‌بینید (مثلاً برای `openCreate` یا متغیرهای script setup):
+If you see "Cannot find name" errors in `.vue` files (e.g. for `openCreate` or script setup variables):
 
-1. افزونه **Vue - Official (Volar)** را نصب کنید و در صورت نصب بودن **Vetur** آن را غیرفعال کنید.
-2. از Command Palette دستور **Vue: Reload Project** یا **Developer: Reload Window** را اجرا کنید.
-3. پروژه از `.vscode/settings.json` استفاده می‌کند؛ در صورت استفاده از Cursor/VS Code، Volar با Take Over Mode برای type-check فایل‌های Vue استفاده می‌شود.
+1. Install the **Vue - Official (Volar)** extension and disable **Vetur** if it is installed.
+2. Run **Vue: Reload Project** or **Developer: Reload Window** from the Command Palette.
+3. The project uses `.vscode/settings.json`; with Cursor/VS Code, Volar in Take Over Mode is used for Vue type-checking.
 
-کد در ران‌تایم درست کار می‌کند؛ این خطاها فقط مربوط به type-check قالب در محیط توسعه هستند.
+The code runs correctly at runtime; these errors are development-time type-check only.
 
-### پیش‌نیازها
+### Prerequisites
 
-- نسخه Node.js: **Node 20 LTS**
+- **Node.js 20 LTS**
 
 ```bash
-# نصب dependencies
+# Install dependencies
 npm install
 
-# اجرای پروژه در حالت development
+# Run in development mode
 npm run dev
 
-# ساخت پروژه برای production
+# Build for production
 npm run build
 
-# پیش‌نمایش پروژه ساخته شده
+# Preview production build
 npm run preview
 ```
 
-## اطلاعات ورود تست
+## Test Login Credentials
 
-برای تست دسترسی منوی "برای انجام" دو کاربر نمونه تعریف شده است:
+For now, a single admin user is available:
 
-- ادمین: نام کاربری `admin` و رمز عبور `admin123` (با پرمیشن `menu_in_todos_show`)
-- مهمان: نام کاربری `guest` و رمز عبور `guest123` (بدون پرمیشن)
+- **Admin:** username `admin`, password `admin123`
 
-از صفحه `/login` وارد شوید. در صورت ورود با کاربر ادمین، آیتم منوی "برای انجام" نمایش داده می‌شود و دسترسی به `/admin` دارید.
+Log in at `/login`. You can use the **dashboard** at `/` and the **admin** task board at `/admin`.
 
-## 🔊 فعال‌سازی نوتیفیکیشن صوتی
+## Enabling Sound Notifications
 
-برای شنیدن صدای نوتیفیکیشن هنگام ایجاد یا تکمیل تسک‌ها، باید دسترسی صدا را در مرورگر فعال کنید:
+To hear sounds when creating or completing tasks, allow **Sound** for the site in your browser (address bar → site permissions). Click the page once if prompted. Ad blockers may block audio.
 
-### مراحل فعال‌سازی
-
-#### Google Chrome
-
-1. روی آیکون قفل یا صدا در نوار آدرس کلیک کنید
-2. گزینه "صدا" را روی "اجازه" تنظیم کنید
-3. صفحه را رفرش کنید
-
-#### Firefox
-
-1. روی آیکون سپر در نوار آدرس کلیک کنید
-2. گزینه "صدا" را روی "اجازه" تنظیم کنید
-3. صفحه را رفرش کنید
-
-#### Microsoft Edge
-
-1. روی آیکون قفل در نوار آدرس کلیک کنید
-2. گزینه "صدا" را روی "اجازه" تنظیم کنید
-3. صفحه را رفرش کنید
-
-### نکات مهم
-
-- **اولین بار:** حتماً روی صفحه کلیک کنید تا صدا فعال شود
-- **Volume سیستم:** مطمئن شوید volume سیستم و مرورگر خاموش نیست
-- **Extension ها:** Extension های ad blocker ممکن است صدا را مسدود کنند
-
-### تست صدا
-
-- هنگام **ایجاد تسک جدید** صدای ایجاد پخش می‌شود
-- هنگام **تغییر وضعیت تسک به "انجام شده"** صدای تکمیل پخش می‌شود
-
-## ساختار پروژه
+## Project Structure
 
 ```
-├── components/         # کامپوننت‌های Vue
-├── composables/        # Composables برای منطق مشترک
-├── assets/             # استایل‌ها و دارایی‌های پردازشی (SCSS, تصاویر ماژولی)
-├── middleware/         # Route middleware
-├── layouts/            # layouts
-├── pages/              # صفحات Nuxt
-├── plugins/            # Nuxt plugins
-├── public/             # فایل‌های استاتیک سِرو‌شونده در روت (مثل favicon)
+├── app.vue             # Root component
+├── assets/             # Styles (SCSS) and processed assets
+├── components/         # Vue components
+├── composables/        # Shared composables
+├── i18n/               # Internationalization (locales: en, fa)
+├── layouts/            # Layouts
+├── middleware/        # Route middleware
+├── pages/              # Nuxt pages
+├── plugins/            # Nuxt plugins (e.g. Vuetify)
+├── public/             # Static files served at root (e.g. favicon)
 ├── stores/             # Pinia stores
 ├── types/              # TypeScript type definitions
-├── utils/              # jalali date
-└── app.vue             # Root component
+├── utils/              # Jalali date utilities
+└── nuxt.config.ts      # Nuxt configuration
 ```
 
-## تکنولوژی‌های استفاده شده
+## Tech Stack
 
-- **Nuxt 3** - Framework اصلی
-- **Vue 3** - Frontend framework
-- **Vuetify 3** - UI component library
-- **TypeScript** - Type safety
-- **Pinia** - State management
-- **VueUse** - Vue composition utilities
-- **VueDraggable** - Drag & drop functionality
+- **Nuxt 3** — App framework
+- **Vue 3** — Frontend framework
+- **Vuetify 3** — UI component library
+- **TypeScript** — Type safety
+- **Pinia** — State management
+- **VueUse** — Composition utilities
+- **VueDraggable** — Drag & drop
 
-## ویژگی‌های فنی
+## Technical Highlights
 
-- **Real-time Sync**: استفاده از BroadcastChannel برای همگام‌سازی بین تب‌ها
-- **Infinite Scroll**: بارگذاری تدریجی تسک‌ها
-- **Notification Sound**: تولید صدا با Web Audio API (نیاز به فعال‌سازی دسترسی صدا)
-- **Permission System**: سیستم پرمیشن type-safe
-- **Responsive Design**: طراحی واکنش‌گرا
-- **RTL Support**: پشتیبانی کامل از راست به چپ
+- **Real-time sync:** BroadcastChannel for cross-tab sync
+- **Dashboard:** Stat cards use Vuetify theme colors (primary, purple, yellow, error) with gradient backgrounds
+- **Status-based view:** Kanban-style columns (Todo, In progress, Done) on the admin page
+- **Notification sound:** Web Audio API (requires sound permission)
+- **Permission system:** Type-safe permissions
+- **Theming:** Light and dark Vuetify themes with custom palette (including error colors)
+- **Responsive design:** Mobile-friendly layout
+- **RTL support:** Full right-to-left support
 
-## مجوز
+## License
 
 MIT License
