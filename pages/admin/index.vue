@@ -6,13 +6,13 @@
           <VTextField class="outlined-primary" variant="outlined" v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" clearable hide-details density="compact" />
         </VCol>
         <VCol cols="12" sm="6" lg="2">
-          <VSelect class="outlined-primary" variant="outlined" v-model="dateRangeFilter" :items="dateRangeItems" :label="$t('Date Range')" hide-details density="compact" />
+          <VSelect :key="`date-${locale}`" class="outlined-primary" variant="outlined" v-model="dateRangeFilter" :items="dateRangeItems" :label="$t('Date Range')" hide-details density="compact" />
         </VCol>
         <VCol cols="12" sm="6" lg="2">
-          <VSelect class="outlined-primary" variant="outlined" v-model="sortBy" :items="sortByItems" :label="$t('Sort By')" hide-details density="compact" />
+          <VSelect :key="`sort-${locale}`" class="outlined-primary" variant="outlined" v-model="sortBy" :items="sortByItems" :label="$t('Sort By')" hide-details density="compact" />
         </VCol>
         <VCol cols="12" sm="6" lg="2">
-          <VSelect class="outlined-primary" variant="outlined" v-model="sortOrder" :items="sortOrderItems" :label="$t('Sort Order')" hide-details density="compact" />
+          <VSelect :key="`order-${locale}`" class="outlined-primary" variant="outlined" v-model="sortOrder" :items="sortOrderItems" :label="$t('Sort Order')" hide-details density="compact" />
         </VCol>
         <VCol cols="12" lg="2">
           <div class="filter-bar__actions">
@@ -204,7 +204,7 @@ function onRemove(task: Task) {
 function confirmDeleteYes() {
   if (taskToDelete.value) {
     removeTask(taskToDelete.value.id)
-    notify($t('Task deleted'), 'error')
+    notify(t('Task deleted'), 'error')
   }
   confirmDelete.value = false
   taskToDelete.value = null
@@ -222,11 +222,11 @@ function onSave(payload: { date: Date; task: Omit<Task, 'id' | 'dueDate'>; editi
       moveTask(id, payload.date)
     }
     updateTask(id, (t) => ({ ...t, ...payload.task }))
-    notify($t('Task updated'), 'info')
+    notify(t('Task updated'), 'info')
   } else {
     addTask(payload.date, payload.task)
     $soundTyped.playCreate()
-    notify($t('Task created'), 'success')
+    notify(t('Task created'), 'success')
   }
   dialog.value = false
 }

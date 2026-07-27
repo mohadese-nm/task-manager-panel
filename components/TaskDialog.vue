@@ -5,7 +5,7 @@
       <VCardText class="app-dialog-card__body">
         <VTextField v-model="title" :label="$t('Title')" />
         <VTextarea v-model="description" :label="$t('Description')" auto-grow />
-        <VSelect :items="statusItems" v-model="status" :label="$t('Status')" />
+        <VSelect :key="`status-${locale}`" :items="statusItems" v-model="status" :label="$t('Status')" />
         <div class="mb-4">
           <PersianDatePicker
             v-model="selectedDate"
@@ -81,7 +81,7 @@ onMounted(() => {
   fillFromProps()
 })
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const statusItems = computed(() => [
   { title: t('To Do'), value: TaskStatus.Todo },
@@ -91,7 +91,7 @@ const statusItems = computed(() => [
 
 function save() {
   if (!selectedDate.value || isNaN(selectedDate.value.getTime())) {
-    alert($t('Please select a valid date'))
+    alert(t('Please select a valid date'))
     return
   }
   

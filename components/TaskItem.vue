@@ -65,6 +65,7 @@ const emit = defineEmits<{
 }>()
 
 const { formatDate, locale } = useFormatDate()
+const { t } = useI18n()
 
 function toggle() { emit('toggle', props.task) }
 
@@ -89,9 +90,9 @@ const chipColor = computed(() => {
 })
 
 const statusLabel = computed(() => {
-  if (props.task.status === TaskStatus.Todo) return $t('To Do')
-  if (props.task.status === TaskStatus.InProgress) return $t('In Progress')
-  return $t('Done')
+  if (props.task.status === TaskStatus.Todo) return t('To Do')
+  if (props.task.status === TaskStatus.InProgress) return t('In Progress')
+  return t('Done')
 })
 
 const createdLabel = computed(() => {
