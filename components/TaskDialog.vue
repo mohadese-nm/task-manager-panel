@@ -1,8 +1,8 @@
 <template>
-  <VDialog v-model="model" max-width="520">
-    <VCard>
-      <VCardTitle>{{ editing ? $t('Edit Task') : $t('Create Task') }}</VCardTitle>
-      <VCardText>
+  <VDialog v-model="model" max-width="520" width="100%" content-class="app-dialog">
+    <VCard class="app-dialog-card">
+      <VCardTitle class="text-wrap">{{ editing ? $t('Edit Task') : $t('Create Task') }}</VCardTitle>
+      <VCardText class="app-dialog-card__body">
         <VTextField v-model="title" :label="$t('Title')" />
         <VTextarea v-model="description" :label="$t('Description')" auto-grow />
         <VSelect :items="statusItems" v-model="status" :label="$t('Status')" />
@@ -14,8 +14,8 @@
           />
         </div>
       </VCardText>
-      <VCardActions>
-        <VSpacer />
+      <VCardActions class="flex-wrap ga-2">
+        <VSpacer class="d-none d-sm-block" />
         <VBtn variant="text" @click="emit('update:modelValue', false)">{{ $t('Cancel') }}</VBtn>
         <VBtn color="primary" @click="save">{{ $t('Save') }}</VBtn>
       </VCardActions>
@@ -81,11 +81,13 @@ onMounted(() => {
   fillFromProps()
 })
 
-const statusItems = [
-  { title: $t('To Do'), value: TaskStatus.Todo },
-  { title: $t('In Progress'), value: TaskStatus.InProgress },
-  { title: $t('Done'), value: TaskStatus.Done }
-]
+const { t } = useI18n()
+
+const statusItems = computed(() => [
+  { title: t('To Do'), value: TaskStatus.Todo },
+  { title: t('In Progress'), value: TaskStatus.InProgress },
+  { title: t('Done'), value: TaskStatus.Done }
+])
 
 function save() {
   if (!selectedDate.value || isNaN(selectedDate.value.getTime())) {

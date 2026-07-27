@@ -10,16 +10,16 @@
         @click="showPicker = true"
       />
 
-      <VDialog v-model="showPicker" max-width="400">
-        <VCard :dir="locale === 'fa' ? 'rtl' : 'ltr'">
-          <VCardTitle class="d-flex align-center justify-space-between">
+      <VDialog v-model="showPicker" max-width="400" width="100%" content-class="app-dialog">
+        <VCard class="app-dialog-card" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
+          <VCardTitle class="d-flex align-center justify-space-between text-wrap">
             <span>{{ $t('Select Date') }}</span>
             <VBtn icon variant="text" @click="showPicker = false">
               <VIcon icon="mdi-close" />
             </VBtn>
           </VCardTitle>
 
-          <VCardText>
+          <VCardText class="app-dialog-card__body">
             <div class="date-picker-content" :class="{ 'dir-ltr': locale === 'en' }">
               <div class="mb-4">
                 <label class="text-body-2 text-medium-emphasis mb-2 d-block">{{ $t('Year') }}</label>
@@ -56,8 +56,8 @@
             </div>
           </VCardText>
 
-          <VCardActions>
-            <VSpacer />
+          <VCardActions class="flex-wrap ga-2">
+            <VSpacer class="d-none d-sm-block" />
             <VBtn variant="text" @click="showPicker = false">{{ $t('Cancel') }}</VBtn>
             <VBtn color="primary" @click="confirmDate">{{ $t('Confirm') }}</VBtn>
           </VCardActions>

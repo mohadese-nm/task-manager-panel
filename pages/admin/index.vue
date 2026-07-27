@@ -1,22 +1,22 @@
 <template>
-  <VContainer fluid class="py-4">
+  <VContainer fluid class="admin-page py-3 py-sm-4 px-2 px-sm-4">
     <div class="filter-bar">
-      <VRow align="center">
-        <VCol cols="12" md="4">
-          <VTextField class="outlined-primary" variant="outlined" v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" clearable hide-details />
+      <VRow align="center" dense>
+        <VCol cols="12" sm="6" lg="4">
+          <VTextField class="outlined-primary" variant="outlined" v-model="search" :label="$t('Search')" prepend-inner-icon="mdi-magnify" clearable hide-details density="compact" />
         </VCol>
-        <VCol cols="12" md="2">
-          <VSelect class="outlined-primary" variant="outlined" v-model="dateRangeFilter" :items="dateRangeItems" :label="$t('Date Range')" hide-details density="comfortable" />
+        <VCol cols="12" sm="6" lg="2">
+          <VSelect class="outlined-primary" variant="outlined" v-model="dateRangeFilter" :items="dateRangeItems" :label="$t('Date Range')" hide-details density="compact" />
         </VCol>
-        <VCol cols="12" md="2">
-          <VSelect class="outlined-primary" variant="outlined" v-model="sortBy" :items="sortByItems" :label="$t('Sort By')" hide-details density="comfortable" />
+        <VCol cols="12" sm="6" lg="2">
+          <VSelect class="outlined-primary" variant="outlined" v-model="sortBy" :items="sortByItems" :label="$t('Sort By')" hide-details density="compact" />
         </VCol>
-        <VCol cols="12" md="2">
-          <VSelect class="outlined-primary" variant="outlined" v-model="sortOrder" :items="sortOrderItems" :label="$t('Sort Order')" hide-details density="comfortable" />
+        <VCol cols="12" sm="6" lg="2">
+          <VSelect class="outlined-primary" variant="outlined" v-model="sortOrder" :items="sortOrderItems" :label="$t('Sort Order')" hide-details density="compact" />
         </VCol>
-        <VCol cols="12" md="2" class="text-center text-md-right">
-          <div class="d-flex gap-2 justify-end">
-            <VBtn color="primary" variant="elevated" rounded="lg" size="large" class="text-white" append-icon="mdi-plus" @click="openCreate">
+        <VCol cols="12" lg="2">
+          <div class="filter-bar__actions">
+            <VBtn color="primary" variant="elevated" rounded="lg" size="small" class="text-white filter-bar__create-btn" append-icon="mdi-plus" @click="openCreate">
               {{ $t('Create Task') }}
             </VBtn>
           </div>
@@ -24,12 +24,57 @@
       </VRow>
     </div>
 
-    <VRow class="kanban-row">
+    <!-- Mobile: one column per tab -->
+    <div class="kanban-tabs d-md-none" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
+      <VTabs v-model="mobileTab" grow color="primary" class="kanban-tabs__nav mb-3" density="comfortable">
+        <VTab
+          v-for="col in kanbanColumns"
+          :key="col.status"
+          :value="col.status"
+          :class="['kanban-tabs__tab', col.class]"
+        >
+          {{ col.title }}
+          <VChip size="x-small" class="ms-1" label variant="tonal">
+            {{ visibleTasksForStatus(col.status).length }}
+          </VChip>
+        </VTab>
+      </VTabs>
+
+      <VCard
+        v-for="col in kanbanColumns"
+        v-show="mobileTab === col.status"
+        :key="`mobile-${col.status}`"
+        :class="['kanban-column', col.class]"
+        :dir="locale === 'fa' ? 'rtl' : 'ltr'"
+      >
+        <VCardText
+          class="kanban-column-content pt-2"
+          @dragover.prevent="onColumnDragover($event, col.status)"
+          @drop="onColumnDrop(col.status)"
+        >
+          <div class="d-flex flex-column gap-2">
+            <TaskItem
+              v-for="t in visibleTasksForStatus(col.status)"
+              :key="t.id"
+              :task="t"
+              class="mb-2"
+              draggable="true"
+              @dragstart="dragStart(t.id)"
+              @edit="onEdit"
+              @remove="onRemove"
+              @toggle="onToggle"
+            />
+          </div>
+        </VCardText>
+      </VCard>
+    </div>
+
+    <!-- Desktop / tablet: 3-column board -->
+    <VRow class="kanban-row d-none d-md-flex" dense>
       <VCol v-for="col in kanbanColumns" :key="col.status" cols="12" md="4">
         <VCard :class="['kanban-column', col.class]" :title="col.title" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
           <VCardText
             class="kanban-column-content pt-2"
-            style="max-height: 70vh; overflow: auto;"
             @dragover.prevent="onColumnDragover($event, col.status)"
             @drop="onColumnDrop(col.status)"
           >
@@ -53,15 +98,15 @@
 
     <component :is="TaskDialog" v-model="dialog" :editing="editingTask" :date="dialogDate" @save="onSave" />
   </VContainer>
-  <VDialog v-model="confirmDelete" max-width="420">
-    <VCard>
-      <VCardTitle>{{ $t('Delete Confirmation') }}</VCardTitle>
+  <VDialog v-model="confirmDelete" max-width="420" width="100%" content-class="app-dialog">
+    <VCard class="app-dialog-card">
+      <VCardTitle class="text-wrap">{{ $t('Delete Confirmation') }}</VCardTitle>
       <VCardText>
         {{ $t('Are you sure you want to delete this task?') }}
-        <div class="text-medium-emphasis mt-2">{{ taskToDelete?.title }}</div>
+        <div class="text-medium-emphasis mt-2 text-wrap">{{ taskToDelete?.title }}</div>
       </VCardText>
-      <VCardActions>
-        <VSpacer />
+      <VCardActions class="flex-wrap ga-2">
+        <VSpacer class="d-none d-sm-block" />
         <VBtn variant="text" @click="confirmDelete = false">{{ $t('Cancel') }}</VBtn>
         <VBtn color="error" @click="confirmDeleteYes">{{ $t('Delete') }}</VBtn>
       </VCardActions>
@@ -91,18 +136,18 @@ const week = useWeek()
 const { applyFilter } = useFilter()
 const nuxtApp = useNuxtApp()
 const { $sound } = nuxtApp
-const locale = (nuxtApp.$i18n as { locale: { value: string } }).locale
+const { t, locale } = useI18n()
 
 const search = computed({
   get: () => searchText.value,
   set: (v: string) => setSearch(v)
 })
 
-const kanbanColumns = [
-  { status: TaskStatus.Todo, title: $t('To Do'), class: 'column-todo' },
-  { status: TaskStatus.InProgress, title: $t('In Progress'), class: 'column-inprogress' },
-  { status: TaskStatus.Done, title: $t('Done'), class: 'column-done' }
-]
+const kanbanColumns = computed(() => [
+  { status: TaskStatus.Todo, title: t('To Do'), class: 'column-todo' },
+  { status: TaskStatus.InProgress, title: t('In Progress'), class: 'column-inprogress' },
+  { status: TaskStatus.Done, title: t('Done'), class: 'column-done' }
+])
 
 type DateRangeFilter = 'all' | 'this_week'
 type SortByOption = 'dueDate' | 'createdAt'
@@ -112,19 +157,20 @@ const dateRangeFilter = ref<DateRangeFilter>('all')
 const sortBy = ref<SortByOption>('dueDate')
 const sortOrder = ref<SortOrderOption>('asc')
 
-const dateRangeItems = [
-  { title: $t('All'), value: 'all' as DateRangeFilter },
-  { title: $t('This Week'), value: 'this_week' as DateRangeFilter }
-]
-const sortByItems = [
-  { title: $t('Due Date'), value: 'dueDate' as SortByOption },
-  { title: $t('Created At'), value: 'createdAt' as SortByOption }
-]
-const sortOrderItems = [
-  { title: $t('Oldest First'), value: 'asc' as SortOrderOption },
-  { title: $t('Newest First'), value: 'desc' as SortOrderOption }
-]
+const dateRangeItems = computed(() => [
+  { title: t('All'), value: 'all' as DateRangeFilter },
+  { title: t('This Week'), value: 'this_week' as DateRangeFilter }
+])
+const sortByItems = computed(() => [
+  { title: t('Due Date'), value: 'dueDate' as SortByOption },
+  { title: t('Created At'), value: 'createdAt' as SortByOption }
+])
+const sortOrderItems = computed(() => [
+  { title: t('Oldest First'), value: 'asc' as SortOrderOption },
+  { title: t('Newest First'), value: 'desc' as SortOrderOption }
+])
 
+const mobileTab = ref<TaskStatus>(TaskStatus.Todo)
 const draggingId = ref<string | null>(null)
 const dialog = ref(false)
 const editingTask = ref<Task | null>(null)

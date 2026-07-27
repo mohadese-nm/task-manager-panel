@@ -8,8 +8,8 @@
         <client-only>
           <VMenu v-model="localeMenuOpen">
             <template #activator="{ props }">
-              <VBtn v-bind="props" variant="outlined" color="secondary" class="mx-1" rounded="lg" prepend-icon="mdi-web" size="small">
-                <span class="text-caption">{{ currentLocaleLabel }}</span>
+              <VBtn v-bind="props" variant="outlined" color="secondary" class="mx-1 locale-btn" rounded="lg" prepend-icon="mdi-web" size="small">
+                <span class="text-caption locale-btn__label">{{ currentLocaleLabel }}</span>
               </VBtn>
             </template>
             <div :class="{ 'locale-menu-hide': localeMenuHideContent }">

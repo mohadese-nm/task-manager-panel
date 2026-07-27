@@ -2,17 +2,17 @@
   <VCard :class="['task-card', statusClass, { 'task-card-done': task.status === TaskStatus.Done }]" elevation="2"
     class="mb-2 px-2 py-2" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
 
-    <div class="d-flex align-center justify-space-between">
-      <div class="d-flex align-center" style="gap: 8px">
-        <VCheckboxBtn :model-value="task.status === TaskStatus.Done" @click.stop="toggle()" />
-        <div class="text-subtitle-2">{{ task.title }}</div>
-        <VChip :color="chipColor" size="small" label variant="tonal" class="mx-1">
+    <div class="task-card__header">
+      <div class="task-card__main">
+        <VCheckboxBtn :model-value="task.status === TaskStatus.Done" @click.stop="toggle()" class="flex-shrink-0" />
+        <div class="task-card__title text-subtitle-2">{{ task.title }}</div>
+        <VChip :color="chipColor" size="small" label variant="tonal" class="task-card__chip flex-shrink-0">
           {{ statusLabel }}
         </VChip>
       </div>
       <VMenu>
         <template #activator="{ props: mProps }">
-          <VBtn v-bind="mProps" icon variant="text" density="comfortable" class="mx-0" rounded="lg">
+          <VBtn v-bind="mProps" icon variant="text" density="comfortable" class="task-card__menu flex-shrink-0" rounded="lg">
             <VIcon icon="mdi-dots-vertical" />
           </VBtn>
         </template>
@@ -34,8 +34,7 @@
     </div>
 
     <div class="mt-2 px-2">
-      <div class="text-caption text-medium-emphasis"
-        style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;">
+      <div class="task-card__desc text-caption text-medium-emphasis">
         {{ displayDesc }}
         <VBtn v-if="!showFull && (task.description || '').length > 60" variant="text" size="x-small" class="px-1"
           color="primary" @click.stop="showFull = true">
@@ -46,7 +45,7 @@
           {{ $t('Less') }}
         </VBtn>
       </div>
-      <div class="text-caption text-disabled mt-1 d-flex flex-column gap-0" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
+      <div class="task-card__meta text-caption text-disabled mt-1" :dir="locale === 'fa' ? 'rtl' : 'ltr'">
         <span>{{ $t('Due Date') }}: {{ formatDate(task.dueDate) }}</span>
         <span>{{ $t('Created At') }}: {{ createdLabel }}</span>
       </div>
